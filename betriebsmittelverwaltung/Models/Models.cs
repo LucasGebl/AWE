@@ -43,7 +43,6 @@ namespace AWE_Projekt.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public User Manager { get; set; }
-
     }
 
     public class Order
