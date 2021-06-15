@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,14 @@ namespace AWE_Projekt.Models
 {
     public class MyContext : DbContext
     {
-        public MyContext(DbContextOptions<MyContext> options) : base(options)
-        { }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=db-awe;Integrated Security=True;Pooling=False");
+            }
+        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<ConstructionSite> ConstructionSites { get; set; }
