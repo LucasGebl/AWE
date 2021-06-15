@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using betriebsmittelverwaltung.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using System;
 using System.Collections.Generic;
@@ -7,23 +8,7 @@ using System.Threading.Tasks;
 
 namespace AWE_Projekt.Models
 {
-    public class MyContext : DbContext
-    {
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=db-awe;Integrated Security=True;Pooling=False");
-            }
-        }
-
-        public DbSet<User> Users { get; set; }
-        public DbSet<ConstructionSite> ConstructionSites { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Return> Returns { get; set; }
-        public DbSet<Resource> Resources { get; set; }
-    }
+   
     public enum ResourceType
     {
         Machine,
@@ -31,19 +16,6 @@ namespace AWE_Projekt.Models
         Resource
     }
 
-    public enum UserType
-    {
-        Admin,
-        Bauleiter,
-        Lagerist
-    }
-    public class User
-    {
-        public int Id { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public UserType Type { get; set; }
-    }
     public class ConstructionSite
     {
         public int Id { get; set; }
