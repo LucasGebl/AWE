@@ -1,0 +1,14 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Weiterleitung zu Login";
+}
+
+<h2>@ViewData["Title"]</h2>
+<li class="nav-item">
+    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+</li>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

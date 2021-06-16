@@ -12,28 +12,25 @@ namespace betriebsmittelverwaltung.Data
 {
     public class AppDBContext : IdentityDbContext<User>
     {
+        public DbSet<User> AppUsers { get; set; }
+        public DbSet<ConstructionSite> ConstructionSites { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Return> Returns { get; set; }
+        public DbSet<Resource> Resources { get; set; }
+
+
         public AppDBContext(DbContextOptions<AppDBContext> options)
             : base(options)
         {
         }
 
-
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
             {
-                if (!optionsBuilder.IsConfigured)
-                {
-                    optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=db-awe;Integrated Security=True;Pooling=False");
-                }
+                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=db-awe;Integrated Security=True;Pooling=False");
             }
-
-            public DbSet<User> Users { get; set; }
-            public DbSet<ConstructionSite> ConstructionSites { get; set; }
-            public DbSet<Order> Orders { get; set; }
-            public DbSet<Return> Returns { get; set; }
-            public DbSet<Resource> Resources { get; set; }
-        
-
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
