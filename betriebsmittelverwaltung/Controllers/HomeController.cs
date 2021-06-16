@@ -12,27 +12,50 @@ namespace betriebsmittelverwaltung.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+          return View();
         }
 
-        public IActionResult About()
+        public IActionResult Baustellenverwaltung()
         {
-            ViewData["Message"] = "Your application description page.";
+            //ViewData["Message"] = "Your application description page.";
 
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Bestandsverwaltung()
         {
-            ViewData["Message"] = "Your contact page.";
+            //ViewData["Message"] = "Your contact page.";
 
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Auftragsverwaltung()
         {
+            //ViewData["Message"] = "Your contact page.";
+
             return View();
         }
+
+        public IActionResult Retourenverwaltung()
+        {
+           // ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+        public IActionResult Nutzerverwaltung()
+        {
+          //  ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
+        public IActionResult Impressum()
+        {
+           // ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
