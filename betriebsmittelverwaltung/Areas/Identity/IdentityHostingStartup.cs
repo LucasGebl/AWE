@@ -15,14 +15,7 @@ namespace betriebsmittelverwaltung.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) => {
-                services.AddDbContext<AppDBContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("AppDBContextConnection")));
-
-                services.AddDefaultIdentity<User>()
-                    .AddEntityFrameworkStores<AppDBContext>();
-            });
+            
         }
     }
 }
