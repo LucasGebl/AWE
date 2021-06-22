@@ -102,7 +102,6 @@ namespace betriebsmittelverwaltung
             {
                 await userManager.AddToRoleAsync(user, "Admin");
             }
-
         }
     }
 }

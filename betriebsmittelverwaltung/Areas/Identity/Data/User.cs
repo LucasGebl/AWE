@@ -16,6 +16,8 @@ namespace betriebsmittelverwaltung.Areas.Identity.Data
             Bauleiter,
             Lagerist
         }
-        public UserType Type { get; set; }
+
+        public string ForeName { get; set; }
+        public string LastName { get; set; }
     }
 }
