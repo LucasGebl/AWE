@@ -28,7 +28,7 @@ namespace betriebsmittelverwaltung.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=awe_project;Integrated Security=True;Pooling=False");
+                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=database_bmv;Integrated Security=True;Pooling=False");
             }
         }
 
