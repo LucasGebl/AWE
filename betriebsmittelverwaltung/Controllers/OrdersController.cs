@@ -7,11 +7,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AWE_Projekt.Models;
 using betriebsmittelverwaltung.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace betriebsmittelverwaltung.Controllers
 {
     public class OrdersController : Controller
     {
+        public enum SortCriteria
+        {
+            [Display(Name = "ID")]
+            Id,
+            Resource,
+            [Display(Name = "Construction Site")]
+            ConstructionSite,
+            CheckOut
+        }
+
         private readonly AppDBContext _context;
 
         public OrdersController(AppDBContext context)

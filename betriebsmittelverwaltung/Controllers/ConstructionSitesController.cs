@@ -7,11 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AWE_Projekt.Models;
 using betriebsmittelverwaltung.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace betriebsmittelverwaltung.Controllers
 {
     public class ConstructionSitesController : Controller
     {
+        public enum SortCriteria
+        {
+            [Display(Name = "ID")]
+            Id,
+            Name,
+            Description,
+            Manager
+        }
+
         private readonly AppDBContext _context;
 
         public ConstructionSitesController(AppDBContext context)
