@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\roett\\Documents\\Studium\\AWE\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj": {}
+    "C:\\Users\\Reppi\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj": {}
   },
   "projects": {
-    "C:\\Users\\roett\\Documents\\Studium\\AWE\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj": {
+    "C:\\Users\\Reppi\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\roett\\Documents\\Studium\\AWE\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj",
+        "projectUniqueName": "C:\\Users\\Reppi\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj",
         "projectName": "betriebsmittelverwaltung",
-        "projectPath": "C:\\Users\\roett\\Documents\\Studium\\AWE\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj",
-        "packagesPath": "C:\\Users\\roett\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\roett\\Documents\\Studium\\AWE\\AWE\\betriebsmittelverwaltung\\obj\\",
+        "projectPath": "C:\\Users\\Reppi\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj",
+        "packagesPath": "C:\\Users\\Reppi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Reppi\\source\\repos\\AWE\\betriebsmittelverwaltung\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\roett\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Reppi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -117,7 +114,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }
