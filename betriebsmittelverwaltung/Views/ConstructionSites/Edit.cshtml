@@ -3,10 +3,10 @@
 @{
     ViewData["Title"] = "Anpassen";
 }
+<h3>Baustellenverwaltung</h3>
+<h4>@ViewData["Title"]</h4>
 
-<h3>@ViewData["Title"]</h3>
 
-<h4>ConstructionSite</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,19 +19,19 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                <label asp-for="Description" class="control-label">Beschreibung</label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Sichern" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Zurück zur Liste</a>
 </div>
 
 @section Scripts {

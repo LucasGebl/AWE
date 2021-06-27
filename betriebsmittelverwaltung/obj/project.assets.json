@@ -12648,19 +12648,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Reppi\\.nuget\\packages\\": {}
+    "C:\\Users\\Herr Voll\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Reppi\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj",
+      "projectUniqueName": "C:\\Users\\Herr Voll\\source\\repos\\Test\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj",
       "projectName": "betriebsmittelverwaltung",
-      "projectPath": "C:\\Users\\Reppi\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj",
-      "packagesPath": "C:\\Users\\Reppi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Reppi\\source\\repos\\AWE\\betriebsmittelverwaltung\\obj\\",
+      "projectPath": "C:\\Users\\Herr Voll\\source\\repos\\Test\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj",
+      "packagesPath": "C:\\Users\\Herr Voll\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Herr Voll\\source\\repos\\Test\\betriebsmittelverwaltung\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Reppi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Herr Voll\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12760,7 +12765,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }
