@@ -35,6 +35,13 @@ namespace betriebsmittelverwaltung
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+
+            });
+
             //Identity
             services.AddDbContext<AppDBContext>(options =>
                   options.UseSqlServer(
