@@ -35,9 +35,48 @@ namespace betriebsmittelverwaltung.Controllers
         }
 
         // GET: Resources
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string Search, string Filter, SortCriteria Sort = SortCriteria.Id, int Page = 1, int PageSize = 10)
         {
-            return View(await _context.Resources.ToListAsync());
+            IQueryable<Resource> query = _context.Resources;
+            query = (Search != null) ? query.Where(m => (m.Name.Contains(Search))) : query;
+            // query = (Filter != null) ? query.Where(m => (m.Manufacturer == Filter)) : query;
+
+            switch (Sort)
+            {
+                case SortCriteria.Id:
+                    query = query.OrderBy(m => m.Id);
+                    break;
+                case SortCriteria.Name:
+                    query = query.OrderBy(m => m.Name);
+                    break;
+                case SortCriteria.BuyDate:
+                    query = query.OrderBy(m => m.BuyDate);
+                    break;
+                case SortCriteria.Type:
+                    query = query.OrderBy(m => m.Type);
+                    break;
+                case SortCriteria.ConstructionSite:
+                    query = query.OrderBy(m => m.ConstructionSite);
+                    break;
+
+                default:
+                    query = query.OrderBy(m => m.Id);
+                    break;
+            }
+
+            int PageTotal = ((await query.CountAsync()) + PageSize - 1) / PageSize;
+            Page = (Page > PageTotal) ? PageTotal : Page;
+            Page = (Page < 1) ? 1 : Page;
+
+            ViewBag.Search = Search;
+            //   ViewBag.Filter = Filter;
+            //   ViewBag.FilterValues = new SelectList(await _context.ConstructionSites.Select(m => m.Manufacturer).Distinct().ToListAsync());
+            ViewBag.Sort = Sort;
+            ViewBag.Page = Page;
+            ViewBag.PageTotal = PageTotal;
+            ViewBag.PageSize = PageSize;
+
+            return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).ToListAsync());
         }
 
         // GET: Resources/Details/5
