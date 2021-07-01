@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using AWE_Projekt.Models;
 using betriebsmittelverwaltung.Data;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace betriebsmittelverwaltung.Controllers
 {
@@ -24,12 +27,13 @@ namespace betriebsmittelverwaltung.Controllers
 
         private readonly AppDBContext _context;
 
-        public ConstructionSitesController(AppDBContext context)
+        public ConstructionSitesController(AppDBContext context )
         {
             _context = context;
+
         }
 
-        // GET: ConstructionSites
+        [Authorize(Roles = "Admin,Bauleiter")]
         public async Task<IActionResult> Index(string Search, string Filter, SortCriteria Sort = SortCriteria.Id, int Page = 1, int PageSize = 10)
         {
             IQueryable<ConstructionSite> query = _context.ConstructionSites;
@@ -71,6 +75,7 @@ namespace betriebsmittelverwaltung.Controllers
         }
 
         // GET: ConstructionSites/Details/5
+        [Authorize(Roles = "Admin,Bauleiter")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -89,6 +94,7 @@ namespace betriebsmittelverwaltung.Controllers
         }
 
         // GET: ConstructionSites/Create
+        [Authorize(Roles = "Admin,Bauleiter")]
         public IActionResult Create()
         {
             return View();
@@ -99,6 +105,7 @@ namespace betriebsmittelverwaltung.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Bauleiter")]
         public async Task<IActionResult> Create([Bind("Id,Name,Description")] ConstructionSite constructionSite)
         {
             if (ModelState.IsValid)
@@ -111,6 +118,7 @@ namespace betriebsmittelverwaltung.Controllers
         }
 
         // GET: ConstructionSites/Edit/5
+        [Authorize(Roles = "Admin,Bauleiter")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -131,6 +139,7 @@ namespace betriebsmittelverwaltung.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Bauleiter")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] ConstructionSite constructionSite)
         {
             if (id != constructionSite.Id)
@@ -162,6 +171,7 @@ namespace betriebsmittelverwaltung.Controllers
         }
 
         // GET: ConstructionSites/Delete/5
+        [Authorize(Roles = "Admin,Bauleiter")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -182,6 +192,7 @@ namespace betriebsmittelverwaltung.Controllers
         // POST: ConstructionSites/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Bauleiter")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var constructionSite = await _context.ConstructionSites.FindAsync(id);
