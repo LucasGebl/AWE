@@ -1,0 +1,114 @@
+﻿@model IEnumerable<AWE_Projekt.Models.ConstructionSite>
+
+@{
+    ViewData["Title"] = "Baustellenverwaltung";
+}
+
+<script>
+    function resetForm() {
+        document.getElementById("Search").value = null;
+        document.getElementById("Filter").value = null;
+        document.getElementById("Sort").value = null;
+        document.getElementById("Page").value = null;
+        document.getElementById("PageSize").value = null;
+        document.getElementById("Form").submit();
+    }
+</script>
+
+<h3>@ViewData["Title"]</h3>
+<hr>
+<form id="Form" asp-action="Index" method="get">
+    <p>
+        <a class="btn btn-primary" asp-action="Create"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;Neue Baustelle anglegen</a>
+        <input type="button" value="Zurücksetzen" class="btn btn-default pull-right" onclick="resetForm()" />
+    </p>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-4">
+                    <label class="control-label">Suche:</label>
+                    <input class="form-control" name="Search" id="Search" value="@ViewBag.Search" placeholder="Suchbegriff eingeben" onchange="document.getElementById('Form').submit()">
+                </div>
+                <div class="col-xs-4">
+                    <label class="control-label">Sortieren nach:</label>
+                    @Html.DropDownList("Sort", Html.GetEnumSelectList(typeof(betriebsmittelverwaltung.Controllers.ConstructionSitesController.SortCriteria)), new { id = "Sort", @class = "form-control", onchange = "document.getElementById('Form').submit()" })
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-right">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Manager)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-right" style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.Manager)
+                        </td>
+                        <td class="text-center" style="vertical-align: middle">
+                            <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a> |
+                            <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="panel-footer">
+            <div class="form-inline row">
+                <div class="col-xs-4">
+                    <div class="form-group pull-left">
+                        <span style="vertical-align: middle">Seite&nbsp;</span>
+                        <input name="Page" id="Page" type="number" value="@ViewBag.Page" class="form-control text-center" style="vertical-align: middle; width: 25%" onchange="document.getElementById('Form').submit()" />
+                        <span style="vertical-align: middle">&nbsp;von @ViewBag.PageTotal</span>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="text-center">
+                        <ul class="pagination" style="margin: 0">
+                            <li class="@(ViewBag.Page <= 1 ? "disabled" : null)"><a href="#" onclick="document.getElementById('Page').value = 1; document.getElementById('Form').submit()">Anfang</a></li>
+                            <li class="@(ViewBag.Page <= 1 ? "disabled" : null)"><a href="#" onclick="document.getElementById('Page').value--; document.getElementById('Form').submit()">Zurück</a></li>
+                            <li class="@(ViewBag.Page >= ViewBag.PageTotal ? "disabled" : null)"><a href="#" onclick="document.getElementById('Page').value++; document.getElementById('Form').submit()">Weiter</a></li>
+                            <li class="@(ViewBag.Page >= ViewBag.PageTotal ? "disabled" : null)"><a href="#" onclick="document.getElementById('Page').value = @ViewBag.PageTotal; document.getElementById('Form').submit()">Ende</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group pull-right">
+                        <span style="vertical-align: middle">Elemente pro Seite:&nbsp;</span>
+                        @Html.DropDownList("PageSize", new SelectList(new string[] { "5", "10", "20" }, ViewBag.PageSize), new { id = "PageSize", @class = "form-control", style = "vertical-align: middle", onchange = "document.getElementById('Form').submit()" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

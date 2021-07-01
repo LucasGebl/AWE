@@ -12,7 +12,6 @@ namespace betriebsmittelverwaltung.Data
 {
     public class AppDBContext : IdentityDbContext<User>
     {
-        public DbSet<User> AppUsers { get; set; }
         public DbSet<ConstructionSite> ConstructionSites { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Return> Returns { get; set; }
@@ -28,7 +27,7 @@ namespace betriebsmittelverwaltung.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=awe_project;Integrated Security=True;Pooling=False");
+                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=MySqlDb;Integrated Security=True;Pooling=False");
             }
         }
 
@@ -39,5 +38,6 @@ namespace betriebsmittelverwaltung.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
     }
 }

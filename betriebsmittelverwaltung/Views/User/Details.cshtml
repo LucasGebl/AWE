@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using betriebsmittelverwaltung.Areas.Identity.Data
+@model betriebsmittelverwaltung.Areas.Identity.Data.User
+
+@{
+    ViewData["Title"] = "Details";
+}
+@inject UserManager<User> UserManager;
+<h3>Nutzerverwaltung</h3>
+<h4>@ViewData["Title"]</h4>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dl class="dl-horizontal">
+            <dt>
+                ID
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt>
+                Email
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt>
+                Vorname
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ForeName)
+            </dd>
+
+            <dt>
+                Nachname
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+            <dt>
+                Rolle(n)
+            </dt>
+            <dd>
+                @{
+                    var roles = await UserManager.GetRolesAsync(Model);
+                    foreach (var r in roles)
+                    {
+                        @r
+                    }
+                }
+            </dd>
+        </dl>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Anpassen</a> |
+    <a asp-action="Index">Zurück zur Liste</a>
+</div>

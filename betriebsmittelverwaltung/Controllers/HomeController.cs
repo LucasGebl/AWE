@@ -13,6 +13,7 @@ namespace betriebsmittelverwaltung.Controllers
     {
         public IActionResult Index()
         {
+            
             return View();
         }
         [Authorize]

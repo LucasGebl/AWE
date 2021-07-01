@@ -1,0 +1,27 @@
+﻿@model AWE_Projekt.Models.Order
+
+@{
+    ViewData["Title"] = "Löschen";
+}
+<h3>Auftragsverwaltung</h3>
+<h4>@ViewData["Title"]</h4>
+
+<h3>Sind Sie sicher, dass Sie dies löschen möchten?</h3>
+<div>
+    <h4>Auftrag</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckOut)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CheckOut)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Löschen" onclick="return confirm('Sind Sie sicher?')" class="btn btn-default" /> |
+        <a asp-action="Index">Zurück zur Liste</a>
+    </form>
+</div>
