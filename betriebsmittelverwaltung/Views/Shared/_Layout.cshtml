@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - betriebsmittelverwaltung</title>
+    <title>@ViewData["Title"] - Betriebsmittelverwaltung</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -26,13 +26,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">betriebsmittelverwaltung</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">WueBau</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+
+                    <li><a asp-area="" asp-controller="ConstructionSites" asp-action="Index">Baustellenverwaltung</a></li>
+                    <li><a asp-area="" asp-controller="Orders" asp-action="Index">Auftragsverwaltung</a></li>
+                    <li><a asp-area="" asp-controller="Resources" asp-action="Index">Bestandsverwaltung</a></li>
+                    <li><a asp-area="" asp-controller="Returns" asp-action="Index">Retourenverwaltung</a></li>
                     <li><a asp-area="" asp-controller="User" asp-action="Index">Nutzerverwaltung</a></li>
                 </ul>
                 <partial name="_LoginPartial" />
@@ -46,7 +48,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2021 - betriebsmittelverwaltung</p>
+            <p>&copy; 2021 - WueBauGmbH</p>
         </footer>
     </div>
 
