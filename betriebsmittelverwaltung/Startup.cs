@@ -39,6 +39,9 @@ namespace betriebsmittelverwaltung
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 3;
 
             });
 
@@ -51,6 +54,7 @@ namespace betriebsmittelverwaltung
                 .AddEntityFrameworkStores<AppDBContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

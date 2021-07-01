@@ -1,23 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\roett\\Documents\\Studium\\AWE\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj": {}
+    "C:\\Users\\Justin\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj": {}
   },
   "projects": {
-    "C:\\Users\\roett\\Documents\\Studium\\AWE\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj": {
+    "C:\\Users\\Justin\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\roett\\Documents\\Studium\\AWE\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj",
+        "projectUniqueName": "C:\\Users\\Justin\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj",
         "projectName": "betriebsmittelverwaltung",
-        "projectPath": "C:\\Users\\roett\\Documents\\Studium\\AWE\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj",
-        "packagesPath": "C:\\Users\\roett\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\roett\\Documents\\Studium\\AWE\\AWE\\betriebsmittelverwaltung\\obj\\",
+        "projectPath": "C:\\Users\\Justin\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj",
+        "packagesPath": "C:\\Users\\Justin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Justin\\source\\repos\\AWE\\betriebsmittelverwaltung\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\roett\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Justin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,7 +27,9 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://dotnet.myget.org/F/dotnet-core/api/v3/index.json\"": {},
+          "https://www.myget.org/F/paket-demo/api/v2": {}
         },
         "frameworks": {
           "netcoreapp2.1": {
@@ -117,7 +121,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

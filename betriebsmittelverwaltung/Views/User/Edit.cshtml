@@ -1,5 +1,85 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Microsoft.AspNetCore.Identity
+@using betriebsmittelverwaltung.Areas.Identity.Data
+@model betriebsmittelverwaltung.Areas.Identity.Data.User
+
 @{
+    ViewData["Title"] = "Anpassen";
+}
+@inject UserManager<User> UserManager;
+
+@{
+    var roles = await UserManager.GetRolesAsync(Model);
+    string role = "";
+    foreach (var r in roles)
+    {
+        role = r;
+    }
+}
+
+<h3>Nutzerverwaltung</h3>
+<h4>@ViewData["Title"]</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="Email" name="email" class="control-label">Email</label>
+                <input asp-for="Email" name="email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="ForeName" name="forename" class="control-label">Vorname</label>
+                <input asp-for="ForeName" name="forename" class="form-control" />
+                <span asp-validation-for="ForeName" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="LastName" name="lastname" class="control-label">Nachname</label>
+                <input asp-for="LastName" name="lastname" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label name="newPassword" class="control-label">Neues Passwort (leer = Keine Änderung)</label>
+                <input name="newPassword" type="password" class="form-control" />
+>            </div>
+
+            <div class="form-group">
+                <label class="control-label">Rolle</label>
+                <select name="role">
+                    @foreach (betriebsmittelverwaltung.Areas.Identity.Data.User.UserType ut in Enum.GetValues(typeof(betriebsmittelverwaltung.Areas.Identity.Data.User.UserType)))
+                    {
+                        @if (ut.ToString() == role)
+                        {
+                            <option value="@ut.ToString()" selected>@ut.ToString()</option>
+                        }
+                        else
+                        {
+                            <option value="@ut.ToString()">@ut.ToString()</option>
+                        }
+
+                    }
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Sichern" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Zurück zur Liste</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

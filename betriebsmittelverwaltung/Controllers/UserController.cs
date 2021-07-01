@@ -10,6 +10,7 @@ using betriebsmittelverwaltung.Data;
 using betriebsmittelverwaltung.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace betriebsmittelverwaltung.Controllers
 {
@@ -34,13 +35,13 @@ namespace betriebsmittelverwaltung.Controllers
             _userManager = userManager;
         }
 
-        // GET: User
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Users.ToListAsync());
         }
 
-        // GET: User/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -58,7 +59,7 @@ namespace betriebsmittelverwaltung.Controllers
             return View(user);
         }
 
-        // GET: User/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -69,6 +70,7 @@ namespace betriebsmittelverwaltung.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(string id, [Bind("Id,Email")] User user, string forename, string lastname, string password, string role)
         {
             if (ModelState.IsValid)
@@ -87,13 +89,13 @@ namespace betriebsmittelverwaltung.Controllers
                     return View(user);
                 }
 
-              //  await _context.SaveChangesAsync();
-                
+                //  await _context.SaveChangesAsync();
+
             }
             return View(user);
         }
 
-        // GET: User/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -114,9 +116,11 @@ namespace betriebsmittelverwaltung.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,CheckOut")] User user)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(string id, string role, string forename, string lastname, string email, string newPassword)
         {
-            if (id != user.Id)
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
@@ -125,8 +129,23 @@ namespace betriebsmittelverwaltung.Controllers
             {
                 try
                 {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
+                    var userRoles = await _userManager.GetRolesAsync(user);
+                    await _userManager.RemoveFromRolesAsync(user, userRoles);
+                    await _userManager.AddToRoleAsync(user, role);
+
+                    user.Email = email;
+                    user.LastName = lastname;
+                    user.ForeName = forename;
+                    await _userManager.UpdateAsync(user);
+
+                    if (!String.IsNullOrWhiteSpace(newPassword))
+                    {
+                        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                        var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+                    }
+
+                    //_context.Update(user);
+                    //await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -144,7 +163,7 @@ namespace betriebsmittelverwaltung.Controllers
             return View(user);
         }
 
-        // GET: User/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
