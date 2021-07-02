@@ -1,4 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using betriebsmittelverwaltung.Areas.Identity.Data
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@{User user = null;
+    IList<string> roles = null;
+if (SignInManager.IsSignedIn(User)) {
+
+         user = await UserManager.GetUserAsync(User);
+         roles = await UserManager.GetRolesAsync(user);
+    } }
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -8,6 +20,7 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="custom.css" asp-append-version="true" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -29,18 +42,28 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">WueBau</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <ul class="nav navbar-nav">
 
-                    <li><a asp-area="" asp-controller="ConstructionSites" asp-action="Index">Baustellenverwaltung</a></li>
-                    <li><a asp-area="" asp-controller="Orders" asp-action="Index">Auftragsverwaltung</a></li>
-                    <li><a asp-area="" asp-controller="Resources" asp-action="Index">Bestandsverwaltung</a></li>
-                    <li><a asp-area="" asp-controller="Returns" asp-action="Index">Retourenverwaltung</a></li>
-                    <li><a asp-area="" asp-controller="User" asp-action="Index">Nutzerverwaltung</a></li>
-                </ul>
+                        <li><a asp-area="" asp-controller="ConstructionSites" asp-action="Index">Baustellenverwaltung</a></li>
+                        <li><a asp-area="" asp-controller="Orders" asp-action="Index">Auftragsverwaltung</a></li>
+                        <li><a asp-area="" asp-controller="Resources" asp-action="Index">Bestandsverwaltung</a></li>
+                        <li><a asp-area="" asp-controller="Returns" asp-action="Index">Retourenverwaltung</a></li>
+                        @if (roles[0] == "Admin")
+                        {
+                            <li><a asp-area="" asp-controller="User" asp-action="Index">Nutzerverwaltung</a></li>
+}
+                    </ul>
+                }
                 <partial name="_LoginPartial" />
             </div>
+
+
         </div>
+
     </nav>
+
 
     <partial name="_CookieConsentPartial" />
 
@@ -62,14 +85,12 @@
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
                 crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
+                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
                 crossorigin="anonymous"
-                integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
-        </script>
+                integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 

@@ -1,0 +1,12 @@
+﻿.menuCard {
+    transition: 0.2s;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+    .menuCard:hover {
+        box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2);
+    }
+
+.menuCardContainer {
+    padding: 2%;
+}
