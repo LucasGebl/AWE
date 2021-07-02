@@ -1,4 +1,9 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using betriebsmittelverwaltung.Areas.Identity.Data
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -53,8 +58,18 @@
     </a>
 </div>
 
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = await UserManager.GetUserAsync(User);
+    var role = await UserManager.GetRolesAsync(user);
+
+<div style="text-align:right; margin-bottom:1%; color: #9d9d9d">
+    Eingeloggt als: @role[0]
+</div>      }
+
 <div class="row">
     <div class="col-md-3">
+
         <h2>Application uses</h2>
         <ul>
             <li>Sample pages using ASP.NET Core MVC</li>

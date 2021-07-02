@@ -11,36 +11,12 @@ namespace betriebsmittelverwaltung.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize(Roles = "Admin,Lagerist, Bauleiter")]
         public IActionResult Index()
         {
             
             return View();
         }
-        [Authorize]
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-        [Authorize]
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-        [Authorize]
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        //[Authorize(Roles = "Admin")]
-        //public IActionResult UserAdministration()
-        //{
-        //    return View();
-        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
