@@ -56,7 +56,7 @@
                         @Html.DisplayNameFor(model => model.LastName)
                     </th>
                     <th>
-                        Rolle(n)
+                        Rolle
                     </th>
                     <th></th>
                 </tr>
@@ -88,9 +88,13 @@
 
                         </td>
                         <td class="text-center" style="vertical-align: middle">
-                            <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a> |
-                            <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
+                            <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a> 
+                            <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                            @if (UserManager.GetUserId(User) != item.Id)
+                            {
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
+                            }
+
                         </td>
                     </tr>
                 }

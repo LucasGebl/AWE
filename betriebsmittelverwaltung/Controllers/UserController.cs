@@ -79,7 +79,13 @@ namespace betriebsmittelverwaltung.Controllers
                 if (u == null)
                 {
                     u = new User { Email = user.Email, UserName = user.Email, ForeName = forename, LastName = lastname };
-                    await _userManager.CreateAsync(u, password);
+                    var result = await _userManager.CreateAsync(u, password);
+                    if (!result.Succeeded)
+                    {
+                        foreach (IdentityError error in result.Errors)
+                            ModelState.AddModelError("", error.Description);
+                        return View(user);
+                    }
                     await _userManager.AddToRoleAsync(u, role);
                     return RedirectToAction(nameof(Index));
                 }
@@ -134,15 +140,25 @@ namespace betriebsmittelverwaltung.Controllers
                     await _userManager.AddToRoleAsync(user, role);
 
                     user.Email = email;
+                    user.UserName = email;
                     user.LastName = lastname;
                     user.ForeName = forename;
-                    await _userManager.UpdateAsync(user);
 
                     if (!String.IsNullOrWhiteSpace(newPassword))
                     {
                         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                         var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+                        if (!result.Succeeded)
+                        {
+                            foreach (IdentityError error in result.Errors)
+                                ModelState.AddModelError("", error.Description);
+                            return View(user);
+                        }
+
                     }
+
+                    await _userManager.UpdateAsync(user);
+
 
                     //_context.Update(user);
                     //await _context.SaveChangesAsync();
@@ -195,6 +211,13 @@ namespace betriebsmittelverwaltung.Controllers
         private bool UserExists(string id)
         {
             return _context.Users.Any(e => e.Id == id);
+        }
+
+        public async Task<bool> IsCurrentUser(User user)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            return user.Id == currentUser.Id;
+
         }
     }
 }

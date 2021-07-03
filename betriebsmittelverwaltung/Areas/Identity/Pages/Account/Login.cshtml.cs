@@ -43,9 +43,10 @@ namespace betriebsmittelverwaltung.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Passwort")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Eingeloggt bleiben")]
             public bool RememberMe { get; set; }
         }
 

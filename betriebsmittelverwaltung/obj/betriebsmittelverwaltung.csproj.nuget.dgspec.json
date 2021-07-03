@@ -1,7 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
     "C:\\Users\\Justin\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj": {}
   },
   "projects": {
@@ -21,22 +20,6 @@
         "configFilePaths": [
           "C:\\Users\\Justin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-=======
-    "C:\\Users\\Reppi\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj": {}
-  },
-  "projects": {
-    "C:\\Users\\Reppi\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\Reppi\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj",
-        "projectName": "betriebsmittelverwaltung",
-        "projectPath": "C:\\Users\\Reppi\\source\\repos\\AWE\\betriebsmittelverwaltung\\betriebsmittelverwaltung.csproj",
-        "packagesPath": "C:\\Users\\Reppi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Reppi\\source\\repos\\AWE\\betriebsmittelverwaltung\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\Reppi\\AppData\\Roaming\\NuGet\\NuGet.Config",
->>>>>>> features/verwaltung
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -138,11 +121,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
-=======
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
->>>>>>> features/verwaltung
         }
       }
     }
