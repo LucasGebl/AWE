@@ -1,12 +1,12 @@
 ﻿@model AWE_Projekt.Models.Resource
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Anpassen";
 }
 
-<h2>Edit</h2>
+<h3>Bestandsverwaltung</h3>
 
-<h4>Resource</h4>
+<h4>@ViewData["Title"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
-                <select asp-for="Type" class="form-control"></select>
+                <select asp-for="Type" asp-items="@Html.GetEnumSelectList<AWE_Projekt.Models.ResourceType>()" class="form-control"></select>
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -39,14 +39,11 @@
                 <span asp-validation-for="UtilizationRate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Sichern" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Zurück zur Liste</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

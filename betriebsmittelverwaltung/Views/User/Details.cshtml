@@ -10,7 +10,6 @@
 <h4>@ViewData["Title"]</h4>
 
 <div>
-    <h4>Order</h4>
     <hr />
     <dl class="dl-horizontal">
         <dl class="dl-horizontal">
@@ -56,6 +55,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Anpassen</a> |
-    <a asp-action="Index">Zurück zur Liste</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Anpassen</a> |
+    <a asp-action="Index" class="btn btn-default">Zurück zur Liste</a>
 </div>

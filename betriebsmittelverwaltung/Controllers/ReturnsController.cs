@@ -19,11 +19,15 @@ namespace betriebsmittelverwaltung.Controllers
         {
             [Display(Name = "ID")]
             Id,
+            [Display(Name = "Ressource")]
             Resource,
+            [Display(Name = "Check In")]
             CheckIn,
+            [Display(Name = "Retourstatus")]
             ReturnStatus,
+            [Display(Name = "Ersteller")]
             Creator
-                   
+
         }
 
         private readonly AppDBContext _context;

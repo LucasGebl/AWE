@@ -6,6 +6,7 @@
 <h3>Baustellenverwaltung</h3>
 <h4>@ViewData["Title"]</h4>
 
+<h3>Sind Sie sicher, dass Sie dies löschen möchten?</h3>
 <div>
     <h4></h4>
     <hr />
@@ -26,7 +27,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Löschen" onclick="return confirm('Sind Sie sicher?')" class="btn btn-default" /> |
-        <a asp-action="Index">Zurück zur Liste</a>
+        <input type="submit" value="Löschen" onclick="return confirm('Sind Sie sicher?')" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-default">Zurück zur Liste</a>
     </form>
 </div>

@@ -19,13 +19,15 @@ namespace betriebsmittelverwaltung.Controllers
             [Display(Name = "ID")]
             Id,
             Name,
-            [Display(Name = "Buy Date")]
+            [Display(Name = "Kaufdatum")]
             BuyDate,
+            [Display(Name = "Typ")]
             Type,
+            [Display(Name = "Wartungsintervall")]
             MaintenanceInterval,
-            [Display(Name = "Utilization Rate")]
+            [Display(Name = "Auslastungsquote")]
             UtilizationRate,
-            [Display(Name = "Construction Site")]
+            [Display(Name = "Baustelle")]
             ConstructionSite,
         }
 
