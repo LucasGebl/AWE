@@ -16,6 +16,7 @@ namespace betriebsmittelverwaltung.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Return> Returns { get; set; }
         public DbSet<Resource> Resources { get; set; }
+        public DbSet<ResourceHistory> RessourceHistories { get; set; }
 
 
         public AppDBContext(DbContextOptions<AppDBContext> options)

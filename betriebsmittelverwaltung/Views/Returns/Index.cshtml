@@ -50,28 +50,40 @@
                     <th>
                         @Html.DisplayNameFor(model => model.CheckIn)
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReturnStatus)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Creator)
+                    </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td class="text-right" style="vertical-align: middle">
-                            @Html.DisplayFor(modelItem => item.Id)
-                        </td>
-                        <td style="vertical-align: middle">
-                            @Html.DisplayFor(modelItem => item.Resource)
-                        </td>
-                        <td style="vertical-align: middle">
-                            @Html.DisplayFor(modelItem => item.CheckIn)
-                        </td>
-                        <td class="text-center" style="vertical-align: middle">
-                            <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td class="text-right" style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.Resource)
+                    </td>
+                    <td style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.CheckIn)
+                    </td>
+                    <td style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.ReturnStatus)
+                    </td>
+                    <td style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.Creator)
+                    </td>
+                    <td class="text-center" style="vertical-align: middle">
+                        <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

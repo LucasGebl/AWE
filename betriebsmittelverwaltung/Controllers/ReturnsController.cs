@@ -21,6 +21,8 @@ namespace betriebsmittelverwaltung.Controllers
             Id,
             Resource,
             CheckIn,
+            ReturnStatus,
+            Creator
                    
         }
 
@@ -48,7 +50,14 @@ namespace betriebsmittelverwaltung.Controllers
                     break;
                 case SortCriteria.CheckIn:
                     query = query.OrderBy(m => m.CheckIn);
-                    break;              
+                    break;
+                case SortCriteria.ReturnStatus:
+                    query = query.OrderBy(m => m.ReturnStatus);
+                    break;
+                case SortCriteria.Creator:
+                    query = query.OrderBy(m => m.Creator);
+                    break;
+                    break;
                 default:
                     query = query.OrderBy(m => m.Id);
                     break;
