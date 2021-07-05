@@ -16,6 +16,7 @@ namespace betriebsmittelverwaltung.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Return> Returns { get; set; }
         public DbSet<Resource> Resources { get; set; }
+        public DbSet<ResourceHistory> RessourceHistories { get; set; }
 
 
         public AppDBContext(DbContextOptions<AppDBContext> options)
@@ -27,7 +28,7 @@ namespace betriebsmittelverwaltung.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=awe_project;Integrated Security=True;Pooling=False");
+                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=betriebsmittelverwaltung;Integrated Security=True;Pooling=False");
             }
         }
 

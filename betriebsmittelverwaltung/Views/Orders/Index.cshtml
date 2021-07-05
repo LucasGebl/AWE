@@ -53,31 +53,43 @@
                     <th>
                         @Html.DisplayNameFor(model => model.CheckOut)
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderStatus)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Creator)
+                    </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td class="text-right" style="vertical-align: middle">
-                            @Html.DisplayFor(modelItem => item.Id)
-                        </td>
-                        <td style="vertical-align: middle">
-                            @Html.DisplayFor(modelItem => item.Resource)
-                        </td>
-                        <td style="vertical-align: middle">
-                            @Html.DisplayFor(modelItem => item.ConstructionSite)
-                        </td>
-                        <td style="vertical-align: middle">
-                            @Html.DisplayFor(modelItem => item.CheckOut)
-                        </td>
-                        <td class="text-center" style="vertical-align: middle">
-                            <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a> |
-                            <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td class="text-right" style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.Resource)
+                    </td>
+                    <td style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.ConstructionSite)
+                    </td>
+                    <td style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.CheckOut)
+                    </td>
+                    <td style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.OrderStatus)
+                    </td>
+                    <td style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.Creator)
+                    </td>
+                    <td class="text-center" style="vertical-align: middle">
+                        <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a> |
+                        <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
