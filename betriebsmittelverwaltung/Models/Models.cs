@@ -12,9 +12,9 @@ namespace AWE_Projekt.Models
    
     public enum ResourceType
     {
-        Machine,
-        Tool,
-        Resource
+        Maschine,
+        Werkzeug,
+        Ressource
     }
 
     public enum HistoryType
@@ -25,21 +25,22 @@ namespace AWE_Projekt.Models
 
     public enum OrderStatus
     {
-        active,
-        completed
+        Aktiv,
+        Erledigt
     }
 
     public enum ReturnStatus
     {
-        confirmed,
-        uncomfirmed
+        unbestätigt,
+        bestätigt
+        
     }
 
     public enum MaintenanceInterval
     {
-        Yearly,
-        EveryTwoYears,
-        EveryThreeYears
+        Jährlich,
+        Zweijährlich,
+        Dreijährlich
     }
 
     public class ConstructionSite
@@ -48,18 +49,29 @@ namespace AWE_Projekt.Models
         [MinLength(2, ErrorMessage = "Der Name muss mindestens 2 Zeichen umfassen.")]
         public string Name { get; set; }
         [MinLength(5, ErrorMessage = "Die Beschreibung muss mindestens 5 Zeichen umfassen.")]
+        [Display(Name = "Beschreibung")]
         public string Description { get; set; }
+        
+        [Display(Name = "Bauleiter")]
         public User Manager { get; set; }
+        [Display(Name = "Ressources")]
         public ICollection<Resource> Resources { get; set; }
+        
+
     }
+    
 
     public class Order
     {
         public int Id { get; set; }
         public DateTime CheckOut { get; set; }
+        [Display(Name = "Order Status")]
         public OrderStatus OrderStatus { get; set; }
+        [Display(Name = "Ressource")]
         public Resource Resource { get; set; }
+        [Display(Name = "Baustelle")]
         public ConstructionSite ConstructionSite { get; set; }
+        [Display(Name = "Ersteller")]
         public User Creator { get; set; }
     }
 
@@ -67,8 +79,11 @@ namespace AWE_Projekt.Models
     {
         public int Id { get; set; }
         public DateTime CheckIn { get; set; }
+        [Display(Name = "Return Status")]
         public ReturnStatus ReturnStatus { get; set; }
+        [Display(Name = "Ressource")]
         public Resource Resource { get; set; }
+        [Display(Name = "Ersteller")]
         public User Creator { get; set; }
     }
 
@@ -76,22 +91,34 @@ namespace AWE_Projekt.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        [Display(Name = "Kaufdatum")]
         public DateTime BuyDate { get; set; }
+        [Display(Name = "Typ")]
         public ResourceType Type { get; set; }
+        [Display(Name = "Wartungsinterval")]
         public MaintenanceInterval MaintenanceInterval { get; set; }
+        [Display(Name = "Verfügbar")]
         public bool Available { get; set; }
+        [Display(Name = "Nutzungsrate")]
         public double UtilizationRate { get; set; }
+        [Display(Name = "Baustelle")]
         public ConstructionSite ConstructionSite { get; set; }
+        [Display(Name = "Ressourcenhistorien")]
         public ICollection<ResourceHistory> ResourceHistories { get; set; }
+        [Display(Name = "Retouren")]
         public ICollection<Return> Returns { get; set; }
+        [Display(Name = "Aufträge")]
         public ICollection<Order> Orders { get; set; }
     }
 
     public class ResourceHistory
     {
         public int Id { get; set; }
+        [Display(Name = "Zeitstempel")]
         public DateTime TimeStamp { get; set; }
+        [Display(Name = "Historientyp")]
         public HistoryType HiType { get; set; }
+        [Display(Name = "Ressource")]
         public Resource Resource { get; set; }
        
     }

@@ -1,13 +1,16 @@
-﻿@model AWE_Projekt.Models.ConstructionSite
+﻿@using Microsoft.AspNetCore.Identity
+@using betriebsmittelverwaltung.Areas.Identity.Data
+@model AWE_Projekt.Models.ConstructionSite
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Baustelle";
 }
+@inject UserManager<User> UserManager;
 <h3>Baustellenverwaltung</h3>
 <h4>@ViewData["Title"]</h4>
 
 <div>
-    
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -22,13 +25,21 @@
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
+        @{
+            var user = await UserManager.GetUserAsync(User);
+        }
+
         <dt>
             @Html.DisplayNameFor(model => model.Manager)
         </dt>
+
         <dd>
-            @Html.DisplayFor(model => model.Manager)
+            @Html.DisplayFor(model => model.Manager.ForeName) @Html.DisplayFor(model => model.Manager.LastName)
         </dd>
+
     </dl>
+
+
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Anpassen</a> |

@@ -57,7 +57,7 @@ namespace betriebsmittelverwaltung.Controllers
                 case SortCriteria.Creator:
                     query = query.OrderBy(m => m.Creator);
                     break;
-                    break;
+                    
                 default:
                     query = query.OrderBy(m => m.Id);
                     break;
