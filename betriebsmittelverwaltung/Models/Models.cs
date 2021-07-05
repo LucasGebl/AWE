@@ -31,8 +31,9 @@ namespace AWE_Projekt.Models
 
     public enum ReturnStatus
     {
-        confirmed,
-        uncomfirmed
+        uncomfirmed,
+        confirmed
+        
     }
 
     public enum MaintenanceInterval
@@ -48,7 +49,9 @@ namespace AWE_Projekt.Models
         [MinLength(2, ErrorMessage = "Der Name muss mindestens 2 Zeichen umfassen.")]
         public string Name { get; set; }
         [MinLength(5, ErrorMessage = "Die Beschreibung muss mindestens 5 Zeichen umfassen.")]
+        [Display(Name = "Beschreibung")]
         public string Description { get; set; }
+        [Display(Name = "Bauleiter")]
         public User Manager { get; set; }
         public ICollection<Resource> Resources { get; set; }
     }
@@ -56,19 +59,26 @@ namespace AWE_Projekt.Models
     public class Order
     {
         public int Id { get; set; }
+        [Display(Name = "Check Out")]
         public DateTime CheckOut { get; set; }
+        [Display(Name = "Auftragsstatus")]
         public OrderStatus OrderStatus { get; set; }
         public Resource Resource { get; set; }
+        [Display(Name = "Baustelle")]
         public ConstructionSite ConstructionSite { get; set; }
+        [Display(Name = "Ersteller")]
         public User Creator { get; set; }
     }
 
     public class Return
     {
         public int Id { get; set; }
+        [Display(Name = "Check In")]
         public DateTime CheckIn { get; set; }
+        [Display(Name = "Retourstatus")]
         public ReturnStatus ReturnStatus { get; set; }
         public Resource Resource { get; set; }
+        [Display(Name = "Ersteller")]
         public User Creator { get; set; }
     }
 
@@ -76,11 +86,17 @@ namespace AWE_Projekt.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        [Display(Name = "Kaufdatum")]
         public DateTime BuyDate { get; set; }
+        [Display(Name = "Typ")]
         public ResourceType Type { get; set; }
+        [Display(Name = "Wartungsintervall")]
         public MaintenanceInterval MaintenanceInterval { get; set; }
+        [Display(Name = "Verfügbar")]
         public bool Available { get; set; }
+        [Display(Name = "Nutzungsrate")]
         public double UtilizationRate { get; set; }
+        [Display(Name = "Baustelle")]
         public ConstructionSite ConstructionSite { get; set; }
         public ICollection<ResourceHistory> ResourceHistories { get; set; }
         public ICollection<Return> Returns { get; set; }
@@ -90,7 +106,10 @@ namespace AWE_Projekt.Models
     public class ResourceHistory
     {
         public int Id { get; set; }
+        [Display(Name = "Zeitstempel")]
         public DateTime TimeStamp { get; set; }
+
+        [Display(Name = "Typ")]
         public HistoryType HiType { get; set; }
         public Resource Resource { get; set; }
        

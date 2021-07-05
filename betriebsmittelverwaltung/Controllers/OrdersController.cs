@@ -33,7 +33,7 @@ namespace betriebsmittelverwaltung.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> Index(string Search, string Filter, SortCriteria Sort = SortCriteria.Id, int Page = 1, int PageSize = 10)
         {
             IQueryable<Order> query = _context.Orders;
@@ -80,7 +80,7 @@ namespace betriebsmittelverwaltung.Controllers
             return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).ToListAsync());
         }
 
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -109,7 +109,7 @@ namespace betriebsmittelverwaltung.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> Create([Bind("Id,CheckOut")] Order order)
         {
             if (ModelState.IsValid)
@@ -121,7 +121,7 @@ namespace betriebsmittelverwaltung.Controllers
             return View(order);
         }
 
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -142,7 +142,7 @@ namespace betriebsmittelverwaltung.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,CheckOut")] Order order)
         {
             if (id != order.Id)
@@ -173,7 +173,7 @@ namespace betriebsmittelverwaltung.Controllers
             return View(order);
         }
 
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -194,7 +194,7 @@ namespace betriebsmittelverwaltung.Controllers
         // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var order = await _context.Orders.FindAsync(id);
