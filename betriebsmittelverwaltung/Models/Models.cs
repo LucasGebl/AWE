@@ -12,9 +12,9 @@ namespace AWE_Projekt.Models
    
     public enum ResourceType
     {
-        Machine,
-        Tool,
-        Resource
+        Maschine,
+        Werkzeug,
+        Ressource
     }
 
     public enum HistoryType
@@ -25,22 +25,22 @@ namespace AWE_Projekt.Models
 
     public enum OrderStatus
     {
-        active,
-        completed
+        Aktiv,
+        Erledigt
     }
 
     public enum ReturnStatus
     {
-        uncomfirmed,
-        confirmed
+        unbestätigt,
+        bestätigt
         
     }
 
     public enum MaintenanceInterval
     {
-        Yearly,
-        EveryTwoYears,
-        EveryThreeYears
+        Jährlich,
+        Zweijährlich,
+        Dreijährlich
     }
 
     public class ConstructionSite
@@ -51,10 +51,15 @@ namespace AWE_Projekt.Models
         [MinLength(5, ErrorMessage = "Die Beschreibung muss mindestens 5 Zeichen umfassen.")]
         [Display(Name = "Beschreibung")]
         public string Description { get; set; }
+        
         [Display(Name = "Bauleiter")]
         public User Manager { get; set; }
+        [Display(Name = "Ressources")]
         public ICollection<Resource> Resources { get; set; }
+        
+
     }
+    
 
     public class Order
     {
@@ -63,6 +68,7 @@ namespace AWE_Projekt.Models
         public DateTime CheckOut { get; set; }
         [Display(Name = "Auftragsstatus")]
         public OrderStatus OrderStatus { get; set; }
+        [Display(Name = "Ressource")]
         public Resource Resource { get; set; }
         [Display(Name = "Baustelle")]
         public ConstructionSite ConstructionSite { get; set; }
@@ -77,6 +83,7 @@ namespace AWE_Projekt.Models
         public DateTime CheckIn { get; set; }
         [Display(Name = "Retourstatus")]
         public ReturnStatus ReturnStatus { get; set; }
+        [Display(Name = "Ressource")]
         public Resource Resource { get; set; }
         [Display(Name = "Ersteller")]
         public User Creator { get; set; }
@@ -98,8 +105,11 @@ namespace AWE_Projekt.Models
         public double UtilizationRate { get; set; }
         [Display(Name = "Baustelle")]
         public ConstructionSite ConstructionSite { get; set; }
+        [Display(Name = "Ressourcenhistorien")]
         public ICollection<ResourceHistory> ResourceHistories { get; set; }
+        [Display(Name = "Retouren")]
         public ICollection<Return> Returns { get; set; }
+        [Display(Name = "Aufträge")]
         public ICollection<Order> Orders { get; set; }
     }
 
@@ -108,9 +118,9 @@ namespace AWE_Projekt.Models
         public int Id { get; set; }
         [Display(Name = "Zeitstempel")]
         public DateTime TimeStamp { get; set; }
-
-        [Display(Name = "Typ")]
+        [Display(Name = "Historientyp")]
         public HistoryType HiType { get; set; }
+        [Display(Name = "Ressource")]
         public Resource Resource { get; set; }
        
     }

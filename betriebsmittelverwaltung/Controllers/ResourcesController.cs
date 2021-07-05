@@ -118,7 +118,7 @@ namespace betriebsmittelverwaltung.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Lagerist")]
-        public async Task<IActionResult> Create([Bind("Id,Name,BuyDate,Type,UtilizationRate")] Resource resource)
+        public async Task<IActionResult> Create([Bind("Id,Name,BuyDate,Type,UtilizationRate,MaintenanceInterval")] Resource resource)
         {
             if (ModelState.IsValid)
             {
@@ -152,7 +152,7 @@ namespace betriebsmittelverwaltung.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Lagerist")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BuyDate,Type,UtilizationRate")] Resource resource)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BuyDate,Type,UtilizationRate,MaintenanceInterval")] Resource resource)
         {
             if (id != resource.Id)
             {
