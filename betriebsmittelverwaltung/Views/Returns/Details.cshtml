@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Details";
 }
-
+<h3>Retourenverwaltung</h3>
 <h2>Details</h2>
 
 <div>
@@ -11,11 +11,30 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.CheckIn)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.CheckIn)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReturnStatus)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReturnStatus)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Creator)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Creator)
+        </dd>
+
     </dl>
 </div>
 <div>

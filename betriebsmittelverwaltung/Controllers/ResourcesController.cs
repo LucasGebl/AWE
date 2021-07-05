@@ -22,6 +22,7 @@ namespace betriebsmittelverwaltung.Controllers
             [Display(Name = "Buy Date")]
             BuyDate,
             Type,
+            MaintenanceInterval,
             [Display(Name = "Utilization Rate")]
             UtilizationRate,
             [Display(Name = "Construction Site")]
@@ -56,6 +57,12 @@ namespace betriebsmittelverwaltung.Controllers
                     break;
                 case SortCriteria.Type:
                     query = query.OrderBy(m => m.Type);
+                    break;
+                case SortCriteria.MaintenanceInterval:
+                    query = query.OrderBy(m => m.MaintenanceInterval);
+                    break;
+                case SortCriteria.UtilizationRate:
+                    query = query.OrderBy(m => m.UtilizationRate);
                     break;
                 case SortCriteria.ConstructionSite:
                     query = query.OrderBy(m => m.ConstructionSite);
