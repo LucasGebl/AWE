@@ -35,7 +35,7 @@ namespace betriebsmittelverwaltung
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
+            //services.Configure<SecurityStampValidatorOptions>(o => o.ValidationInterval = TimeSpan.Zero);
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireNonAlphanumeric = false;
