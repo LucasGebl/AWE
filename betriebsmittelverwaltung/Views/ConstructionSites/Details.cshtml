@@ -7,7 +7,7 @@
 <h4>@ViewData["Title"]</h4>
 
 <div>
-    
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -29,8 +29,40 @@
             @Html.DisplayFor(model => model.Manager)
         </dd>
     </dl>
+
 </div>
-<div>
+@{
+    var res = (List<AWE_Projekt.Models.Resource>)ViewData["Resources"];
+}
+
+@if (res.Count != 0)
+{
+    <table>
+        <thead>
+        <th>
+            Ressource
+        </th>
+        <th>
+            Optionen
+        </th>
+        </thead>
+        <tbody>
+
+
+            @foreach (var item in res)
+            {
+            <td>@item.Name</td>
+            <td>Optionen</td>
+        }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h4>Keine Ressource eingetragen.</h4>
+    }
+
+
     <a asp-action="Edit" asp-route-id="@Model.Id">Anpassen</a> |
     <a asp-action="Index">Zurück zur Liste</a>
 </div>

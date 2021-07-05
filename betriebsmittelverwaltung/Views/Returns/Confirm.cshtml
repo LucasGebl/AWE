@@ -1,27 +1,15 @@
 ﻿@model IEnumerable<AWE_Projekt.Models.Return>
 
 @{
-    ViewData["Title"] = "Retourenverwaltung";
+    ViewData["Title"] = "Index";
 }
 
-<script>
-    function resetForm() {
-        document.getElementById("Search").value = null;
-        document.getElementById("Filter").value = null;
-        document.getElementById("Sort").value = null;
-        document.getElementById("Page").value = null;
-        document.getElementById("PageSize").value = null;
-        document.getElementById("Form").submit();
-    }
-</script>
 
-<h3>Retourenverwaltung</h3>
-
-<form id="Form" asp-action="Index" method="get">
-    @*<p>
+<form id="Confirm" asp-action="Confirm" method="get">
+    <p>
         <a class="btn btn-primary" asp-action="Create"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;Neue Retour aufgeben</a>
         <input type="button" value="Reset" class="btn btn-default pull-right" onclick="resetForm()" />
-    </p>*@
+    </p>
 
 
     <div class="panel panel-default">
@@ -62,34 +50,34 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td class="text-right" style="vertical-align: middle">
-                            @Html.DisplayFor(modelItem => item.Id)
-                        </td>
-                        <td style="vertical-align: middle">
-                            @Html.DisplayFor(modelItem => item.Resource)
-                        </td>
-                        <td style="vertical-align: middle">
-                            @Html.DisplayFor(modelItem => item.CheckIn)
-                        </td>
-                        <td style="vertical-align: middle">
-                            @Html.DisplayFor(modelItem => item.ReturnStatus)
-                        </td>
-                        <td style="vertical-align: middle">
-                            @Html.DisplayFor(modelItem => item.Creator.ForeName)  @Html.DisplayFor(modelItem => item.Creator.ForeName)
-                        </td>
+                <tr>
+                    <td class="text-right" style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.Resource)
+                    </td>
+                    <td style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.CheckIn)
+                    </td>
+                    <td style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.ReturnStatus)
+                    </td>
+                    <td style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.Creator)
+                    </td>
 
-                        <td class="text-center" style="vertical-align: middle">
+                    <td class="text-center" style="vertical-align: middle">
 
-                            @if (item.ReturnStatus == AWE_Projekt.Models.ReturnStatus.uncomfirmed)
-                            {
-                                <a class="btn btn-sm btn-default" asp-controller="Return" asp-action="Confirm">Akzeptieren</a>
-                            }
-                            <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                            <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
+                        @if (item.ReturnStatus == AWE_Projekt.Models.ReturnStatus.uncomfirmed)
+                        {
+                            <a class="btn btn-sm btn-default" asp-action="ConfirmState" asp- asp-route-id="@item.Id">Akzeptieren</a>
+                        }
+                        <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

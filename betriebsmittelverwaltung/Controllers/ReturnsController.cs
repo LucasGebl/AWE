@@ -23,7 +23,7 @@ namespace betriebsmittelverwaltung.Controllers
             CheckIn,
             ReturnStatus,
             Creator
-                   
+
         }
 
         private readonly AppDBContext _context;
@@ -33,7 +33,7 @@ namespace betriebsmittelverwaltung.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> Index(string Search, string Filter, SortCriteria Sort = SortCriteria.Id, int Page = 1, int PageSize = 10)
         {
             IQueryable<Return> query = _context.Returns;
@@ -78,7 +78,7 @@ namespace betriebsmittelverwaltung.Controllers
             return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).ToListAsync());
         }
 
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -96,7 +96,7 @@ namespace betriebsmittelverwaltung.Controllers
             return View(@return);
         }
 
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public IActionResult Create()
         {
             return View();
@@ -107,7 +107,7 @@ namespace betriebsmittelverwaltung.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> Create([Bind("Id,CheckIn")] Return @return)
         {
             if (ModelState.IsValid)
@@ -119,7 +119,7 @@ namespace betriebsmittelverwaltung.Controllers
             return View(@return);
         }
 
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -140,7 +140,7 @@ namespace betriebsmittelverwaltung.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,CheckIn")] Return @return)
         {
             if (id != @return.Id)
@@ -171,8 +171,62 @@ namespace betriebsmittelverwaltung.Controllers
             return View(@return);
         }
 
+        public async Task<IActionResult> Confirm(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var @return = await _context.Returns.FindAsync(id);
+            if (@return == null)
+            {
+                return NotFound();
+            }
+            return View(@return);
+        }
+
+        [HttpPost, ActionName("Confirm")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Lagerist")]
+        public async Task<IActionResult> Confirm(int id, [Bind("Id")] Return @return)
+        {
+            if (id != @return.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    @return.ReturnStatus = ReturnStatus.confirmed;
+                    @return.CheckIn = DateTime.Now;
+                    @return.Resource.ConstructionSite = null;
+                    @return.Resource.Available = true;
+
+                    _context.Update(@return);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ReturnExists(@return.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return View(@return);
+                //return RedirectToAction(nameof(Index));
+            }
+            return View(@return);
+        }
+
         // GET: Returns/Delete/5
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -193,7 +247,7 @@ namespace betriebsmittelverwaltung.Controllers
         // POST: Returns/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
+        [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var @return = await _context.Returns.FindAsync(id);
