@@ -11,6 +11,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using betriebsmittelverwaltung.Areas.Identity.Data;
 
 namespace betriebsmittelverwaltung.Controllers
 {
@@ -26,11 +27,12 @@ namespace betriebsmittelverwaltung.Controllers
         }
 
         private readonly AppDBContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public ConstructionSitesController(AppDBContext context )
+        public ConstructionSitesController(AppDBContext context, UserManager<User> userManager)
         {
             _context = context;
-
+            _userManager = userManager;
         }
 
         [Authorize(Roles = "Admin,Bauleiter")]
@@ -108,6 +110,9 @@ namespace betriebsmittelverwaltung.Controllers
         [Authorize(Roles = "Admin,Bauleiter")]
         public async Task<IActionResult> Create([Bind("Id,Name,Description")] ConstructionSite constructionSite)
         {
+            var user = await _userManager.GetUserAsync(User);
+            constructionSite.Manager = user;
+
             if (ModelState.IsValid)
             {
                 _context.Add(constructionSite);
