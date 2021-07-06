@@ -183,7 +183,34 @@ namespace betriebsmittelverwaltung.Controllers
             {
                 return NotFound();
             }
-            return View(@return);
+
+            try
+            {
+                @return.ReturnStatus = ReturnStatus.confirmed;
+                @return.CheckIn = DateTime.Now;
+                if(@return.Resource != null)
+                {
+                    @return.Resource.ConstructionSite = null;
+                    @return.Resource.Available = true;
+                }
+
+
+                _context.Update(@return);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ReturnExists(@return.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+           // return View(@return);
         }
 
         [HttpPost, ActionName("Confirm")]

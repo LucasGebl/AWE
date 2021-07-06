@@ -83,7 +83,7 @@
 
                             @if (item.ReturnStatus == AWE_Projekt.Models.ReturnStatus.uncomfirmed)
                             {
-                                <a class="btn btn-sm btn-default" asp-controller="Return" asp-action="Confirm">Akzeptieren</a>
+                                <a class="btn btn-sm btn-default" asp-action="Confirm" asp-route-id="@item.Id">Akzeptieren</a>
                             }
                             <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                             <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a>
