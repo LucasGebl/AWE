@@ -127,11 +127,12 @@ namespace betriebsmittelverwaltung.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Lagerist")]
-        public async Task<IActionResult> Create([Bind("Id,CheckOut")] Order order, int resourceId)
+        public async Task<IActionResult> Create([Bind("Id,CheckOut")] Order order, int resourceId, int constructionId)
         {
             if (ModelState.IsValid)
             {
-                order.ConstructionSite = await _context.ConstructionSites.Where(x => x.Id == (int)ViewData["ConstructionSiteId"]).FirstOrDefaultAsync();
+      
+                order.ConstructionSite = await _context.ConstructionSites.Where(x => x.Id == constructionId).FirstOrDefaultAsync();
                 order.Creator = await _userManager.GetUserAsync(User);
                 order.Resource = await _context.Resources.Where(x => x.Id == resourceId).FirstOrDefaultAsync();
                 _context.Add(order);
@@ -221,6 +222,45 @@ namespace betriebsmittelverwaltung.Controllers
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Confirm(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Orders.Include(x => x.Resource).Include(x => x.Creator).Include(x => x.ConstructionSite).Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                order.OrderStatus = OrderStatus.Erledigt;
+                order.Resource.Available = false;
+                order.Resource.ConstructionSite = order.ConstructionSite;
+               // order.ConstructionSite.Resources.Add(order.Resource);
+                order.CheckOut = DateTime.Now;
+
+                _context.Update(order);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(order.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+            // return View(order);
         }
 
         private bool OrderExists(int id)

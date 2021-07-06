@@ -76,17 +76,32 @@
                         @Html.DisplayFor(modelItem => item.ConstructionSite.Name)
                     </td>
                     <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.CheckOut)
+                        @{
+                            if (item.OrderStatus == AWE_Projekt.Models.OrderStatus.Aktiv)
+                            {
+                                <span>-</span>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.CheckOut)
+                            }
+
+                        }
+
                     </td>
                     <td style="vertical-align: middle">
                         @Html.DisplayFor(modelItem => item.OrderStatus)
                     </td>
                     <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.Creator)
+                        @Html.DisplayFor(modelItem => item.Creator.ForeName) @Html.DisplayFor(modelItem => item.Creator.LastName)
                     </td>
                     <td class="text-center" style="vertical-align: middle">
-                        <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a> |
-                        <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        @if (item.OrderStatus == AWE_Projekt.Models.OrderStatus.Aktiv)
+                        {
+                            <a class="btn btn-sm btn-default" style="background-color:#53a653; color:#fff;" asp-action="Confirm" asp-route-id="@item.Id">Akzeptieren</a>
+                        }
+                        <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a>
+                        <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a>
                         <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
                     </td>
                 </tr>

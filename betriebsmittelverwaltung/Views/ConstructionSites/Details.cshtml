@@ -44,9 +44,10 @@
     var res = (List<AWE_Projekt.Models.Resource>)ViewData["Resources"];
 }
 
+<a class="btn btn-sm btn-default" asp-controller="Orders" asp-action="Create" asp-route-constructionSiteId="@Model.Id">Neuen Antrag für Betriebsmittel erstellen</a>
 @if (res.Count != 0)
 {
-    <table>
+    <table class="table table-bordered">
         <thead>
         <th>
             Ressource
@@ -60,18 +61,21 @@
 
             @foreach (var item in res)
             {
-            <td>@item.Name</td>
-            <td>Optionen</td>
-        }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <h4>Keine Ressource eingetragen.</h4>
-    }
+                <tr>
+                    <td>@item.Name</td>
+                    <td><a class="btn btn-sm btn-default" asp-controller="Returns" asp-action="Create" asp-route-constructionSite="@Model" asp-route-id="@item.Id">Retour</a></td>
+
+                </tr>
+}
+        </tbody>
+    </table>
+}
+else
+{
+    <h4>Keine Ressource eingetragen.</h4>
+}
 
 
-    <a asp-action="Edit" asp-route-id="@Model.Id">Anpassen</a> |
-    <a asp-action="Index">Zurück zur Liste</a>
+<a asp-action="Edit" asp-route-id="@Model.Id">Anpassen</a> |
+<a asp-action="Index">Zurück zur Liste</a>
 </div>

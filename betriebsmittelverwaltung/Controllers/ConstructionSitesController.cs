@@ -73,7 +73,7 @@ namespace betriebsmittelverwaltung.Controllers
             ViewBag.PageTotal = PageTotal;
             ViewBag.PageSize = PageSize;
 
-            return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).Include(m => m.Manager).ToListAsync());
+            return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).Include(m => m.Manager).Include(m => m.Resources).ToListAsync());
         }
 
         // GET: ConstructionSites/Details/5
@@ -87,6 +87,7 @@ namespace betriebsmittelverwaltung.Controllers
 
             var constructionSite = await _context.ConstructionSites
                 .Include(m => m.Manager)
+                .Include(m => m.Resources)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             ViewData["Resources"] = await _context.Resources.Where(x => x.ConstructionSite == constructionSite).ToListAsync();
@@ -116,7 +117,7 @@ namespace betriebsmittelverwaltung.Controllers
             var user = await _userManager.GetUserAsync(User);
             constructionSite.Manager = user;
             constructionSite.Resources = new List<Resource>();
-            constructionSite.Resources.Add(new Resource { Name = "sdsd" });
+            
 
             if (ModelState.IsValid)
             {
@@ -189,6 +190,7 @@ namespace betriebsmittelverwaltung.Controllers
                 return NotFound();
             }
 
+
             var constructionSite = await _context.ConstructionSites
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (constructionSite == null)
@@ -206,6 +208,36 @@ namespace betriebsmittelverwaltung.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var constructionSite = await _context.ConstructionSites.FindAsync(id);
+
+            var orders = await _context.Orders.Where(x => x.OrderStatus == OrderStatus.Aktiv && x.ConstructionSite == constructionSite).ToListAsync();
+            foreach (var item in orders)
+            {
+                item.ConstructionSite = null;
+                item.OrderStatus = OrderStatus.Erledigt;
+                item.CheckOut = DateTime.Now;
+                _context.Orders.Update(item);
+            }
+
+            var returns = await _context.Returns.Where(x => x.ReturnStatus == ReturnStatus.unbestätigt && x.Resource.ConstructionSite == constructionSite).ToListAsync();
+            foreach (var item in returns)
+            {
+                item.ReturnStatus = ReturnStatus.bestätigt;
+                item.CheckIn = DateTime.Now;
+                _context.Returns.Update(item);
+            }
+
+            var resources = await _context.Resources.Where(x => x.ConstructionSite == constructionSite).ToListAsync();
+            foreach(var item in resources)
+            {
+                item.ConstructionSite = null;
+                item.Available = true;
+                _context.Resources.Update(item);
+            }
+
+
+
+            await _context.SaveChangesAsync();
+
             _context.ConstructionSites.Remove(constructionSite);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

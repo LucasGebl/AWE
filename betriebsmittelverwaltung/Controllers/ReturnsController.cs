@@ -102,10 +102,26 @@ namespace betriebsmittelverwaltung.Controllers
         }
 
         [Authorize(Roles = "Admin,Lagerist")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int? id)
         {
-            ViewData["Resources"] = _context.Resources.Where(x => x.ConstructionSite != null).ToList();
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Return @return = new Return { ReturnStatus = ReturnStatus.unbestätigt };
+            if (ModelState.IsValid)
+            {
+
+                @return.Resource = await _context.Resources.Where(x => x.Id == id).FirstOrDefaultAsync();
+                @return.Creator = await _userManager.GetUserAsync(User);
+                _context.Add(@return);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(@return);
+
+            //ViewData["Resources"] = _context.Resources.Where(x => x.ConstructionSite != null).ToList();
+            //return View();
         }
 
         // POST: Returns/Create
@@ -179,14 +195,14 @@ namespace betriebsmittelverwaltung.Controllers
             return View(@return);
         }
 
-        public async Task<IActionResult> Confirm(int? id)
+        public async Task<IActionResult> Confirm(int? id, ConstructionSite constructionSite)
         {
-            if (id == null)
+            if (id == null || constructionSite == null)
             {
                 return NotFound();
             }
 
-            var @return = await _context.Returns.FindAsync(id);
+            var @return = await _context.Returns.Where(x => x.Id == id).Include(x => x.Creator).Include(x => x.Resource).FirstOrDefaultAsync();
             if (@return == null)
             {
                 return NotFound();
@@ -196,13 +212,19 @@ namespace betriebsmittelverwaltung.Controllers
             {
                 @return.ReturnStatus = ReturnStatus.bestätigt;
                 @return.CheckIn = DateTime.Now;
-                if(@return.Resource != null)
+                if (@return.Resource != null)
                 {
-                    @return.Resource.ConstructionSite = null;
-                    @return.Resource.Available = true;
+                    var result = _context.Resources.SingleOrDefault(b => b.Id == @return.Resource.Id);
+                    if (result != null)
+                    {
+                        result.ConstructionSite = null;
+                        result.Available = true;
+                        _context.SaveChanges();
+                    }
+
                 }
 
-
+                _context.Update<Resource>(@return.Resource);
                 _context.Update(@return);
                 await _context.SaveChangesAsync();
             }
@@ -218,7 +240,7 @@ namespace betriebsmittelverwaltung.Controllers
                 }
             }
             return RedirectToAction(nameof(Index));
-           // return View(@return);
+            // return View(@return);
         }
 
         [HttpPost, ActionName("Confirm")]

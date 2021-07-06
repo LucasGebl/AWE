@@ -85,7 +85,7 @@ namespace betriebsmittelverwaltung.Controllers
             ViewBag.PageTotal = PageTotal;
             ViewBag.PageSize = PageSize;
 
-            return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).ToListAsync());
+            return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).Include(x => x.ConstructionSite).ToListAsync());
         }
 
         [Authorize(Roles = "Admin,Lagerist")]
@@ -97,6 +97,7 @@ namespace betriebsmittelverwaltung.Controllers
             }
 
             var resource = await _context.Resources
+                .Include(x => x.ConstructionSite)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (resource == null)
             {

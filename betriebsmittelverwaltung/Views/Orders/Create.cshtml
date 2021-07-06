@@ -11,6 +11,7 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
+            <input readonly hidden name="constructionId" value="@ViewData["ConstructionSiteId"]" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             @if (((List<AWE_Projekt.Models.Resource>)ViewData["Resources"]).Count == 0)
