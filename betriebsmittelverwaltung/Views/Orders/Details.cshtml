@@ -6,9 +6,8 @@
 <h3>Auftragsverwaltung</h3>
 <h4>@ViewData["Title"]</h4>
 
+<hr />
 <div>
-    <h4>Order</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Id)
@@ -32,11 +31,11 @@
             @Html.DisplayNameFor(model => model.Creator)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Creator)
+            @Html.DisplayFor(model => model.Creator.ForeName) @Html.DisplayFor(model => model.Creator.LastName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Anpassen" asp-route-id="@Model.Id">Anpassen</a> |
-    <a asp-action="Index">Zurück zur Liste</a>
+    <a asp-action="Anpassen" asp-route-id="@Model.Id" class="btn btn-default">Anpassen</a> |
+    <a asp-action="Index" class="btn btn-default">Zurück zur Liste</a>
 </div>
