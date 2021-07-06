@@ -4,10 +4,11 @@
 @inject UserManager<User> UserManager
 @{User user = null;
     IList<string> roles = null;
-if (SignInManager.IsSignedIn(User)) {
+    if (SignInManager.IsSignedIn(User))
+    {
 
-         user = await UserManager.GetUserAsync(User);
-         roles = await UserManager.GetRolesAsync(user);
+        user = await UserManager.GetUserAsync(User);
+        roles = await UserManager.GetRolesAsync(user);
     } }
 
 <!DOCTYPE html>
@@ -45,15 +46,24 @@ if (SignInManager.IsSignedIn(User)) {
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <ul class="nav navbar-nav">
+                        @if (roles[0] == "Admin" || roles[0] == "Bauleiter")
+                        {
 
-                        <li><a asp-area="" asp-controller="ConstructionSites" asp-action="Index">Baustellenverwaltung</a></li>
+                            <li><a asp-area="" asp-controller="ConstructionSites" asp-action="Index">Baustellenverwaltung</a></li>
+                        }
+
                         <li><a asp-area="" asp-controller="Orders" asp-action="Index">Auftragsverwaltung</a></li>
-                        <li><a asp-area="" asp-controller="Resources" asp-action="Index">Bestandsverwaltung</a></li>
-                        <li><a asp-area="" asp-controller="Returns" asp-action="Index">Retourenverwaltung</a></li>
+
+                        @if (roles[0] == "Admin" || roles[0] == "Lagerist")
+                        {
+                            <li><a asp-area="" asp-controller="Resources" asp-action="Index">Bestandsverwaltung</a></li>
+
+                            <li><a asp-area="" asp-controller="Returns" asp-action="Index">Retourenverwaltung</a></li>
+                        }
                         @if (roles[0] == "Admin")
                         {
                             <li><a asp-area="" asp-controller="User" asp-action="Index">Nutzerverwaltung</a></li>
-}
+                        }
                     </ul>
                 }
                 <partial name="_LoginPartial" />

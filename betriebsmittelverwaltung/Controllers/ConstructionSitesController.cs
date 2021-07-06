@@ -88,6 +88,8 @@ namespace betriebsmittelverwaltung.Controllers
             var constructionSite = await _context.ConstructionSites
                 .Include(m => m.Manager)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            ViewData["Resources"] = await _context.Resources.Where(x => x.ConstructionSite == constructionSite).ToListAsync();
             if (constructionSite == null)
             {
                 return NotFound();
@@ -113,6 +115,8 @@ namespace betriebsmittelverwaltung.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             constructionSite.Manager = user;
+            constructionSite.Resources = new List<Resource>();
+            constructionSite.Resources.Add(new Resource { Name = "sdsd" });
 
             if (ModelState.IsValid)
             {
