@@ -9,6 +9,8 @@ using AWE_Projekt.Models;
 using betriebsmittelverwaltung.Data;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using betriebsmittelverwaltung.Areas.Identity.Data;
 
 namespace betriebsmittelverwaltung.Controllers
 {
@@ -27,17 +29,18 @@ namespace betriebsmittelverwaltung.Controllers
         }
 
         private readonly AppDBContext _context;
-
-        public OrdersController(AppDBContext context)
+        private readonly UserManager<User> _userManager;
+        public OrdersController(AppDBContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> Index(string Search, string Filter, SortCriteria Sort = SortCriteria.Id, int Page = 1, int PageSize = 10)
         {
             IQueryable<Order> query = _context.Orders;
-           // query = (Search != null) ? query.Where(m => m.Id.Contains(Search)) : query;
+            // query = (Search != null) ? query.Where(m => m.Id.Contains(Search)) : query;
             // query = (Filter != null) ? query.Where(m => (m.Manufacturer == Filter)) : query;
 
             switch (Sort)
@@ -77,7 +80,11 @@ namespace betriebsmittelverwaltung.Controllers
             ViewBag.PageTotal = PageTotal;
             ViewBag.PageSize = PageSize;
 
-            return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).ToListAsync());
+            return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize)
+                                .Include(x => x.Resource)
+                .Include(x => x.Creator)
+                .Include(x => x.ConstructionSite)
+                .ToListAsync());
         }
 
         [Authorize(Roles = "Admin,Lagerist")]
@@ -89,6 +96,9 @@ namespace betriebsmittelverwaltung.Controllers
             }
 
             var order = await _context.Orders
+                .Include(x => x.Resource)
+                .Include(x => x.Creator)
+                .Include(x => x.ConstructionSite)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (order == null)
             {
@@ -98,9 +108,16 @@ namespace betriebsmittelverwaltung.Controllers
             return View(order);
         }
 
-        // GET: Orders/Create
-        public IActionResult Create()
+        // GET: Orders/Create/2
+        public IActionResult Create(int? constructionSiteId)
         {
+            if(constructionSiteId == null)
+            {
+                return NotFound();
+            }
+            ViewData["ConstructionSiteId"] = constructionSiteId;
+
+            ViewData["Resources"] = _context.Resources.Where(x => x.Available == true).ToList();
             return View();
         }
 
@@ -110,10 +127,13 @@ namespace betriebsmittelverwaltung.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Lagerist")]
-        public async Task<IActionResult> Create([Bind("Id,CheckOut")] Order order)
+        public async Task<IActionResult> Create([Bind("Id,CheckOut")] Order order, int resourceId)
         {
             if (ModelState.IsValid)
             {
+                order.ConstructionSite = await _context.ConstructionSites.Where(x => x.Id == (int)ViewData["ConstructionSiteId"]).FirstOrDefaultAsync();
+                order.Creator = await _userManager.GetUserAsync(User);
+                order.Resource = await _context.Resources.Where(x => x.Id == resourceId).FirstOrDefaultAsync();
                 _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

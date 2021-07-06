@@ -19,10 +19,10 @@
 <hr>
 
 <form id="Form" asp-action="Index" method="get">
-    <p>
+    @*<p>
         <a class="btn btn-primary" asp-action="Create"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;Neuen Auftrag anlegen</a>
         <input type="button" value="Zurücksetzen" class="btn btn-default pull-right" onclick="resetForm()" />
-    </p>
+    </p>*@
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -70,10 +70,10 @@
                         @Html.DisplayFor(modelItem => item.Id)
                     </td>
                     <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.Resource)
+                        @Html.DisplayFor(modelItem => item.Resource.Name)
                     </td>
                     <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.ConstructionSite)
+                        @Html.DisplayFor(modelItem => item.ConstructionSite.Name)
                     </td>
                     <td style="vertical-align: middle">
                         @Html.DisplayFor(modelItem => item.CheckOut)

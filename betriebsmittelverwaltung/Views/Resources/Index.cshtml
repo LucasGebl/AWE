@@ -69,45 +69,49 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td class="text-right" style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.BuyDate)
-                    </td>
-                    <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>
-                    <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.MaintenanceInterval)
-                    </td>
-                    <td style="vertical-align: middle">
+                    <tr>
+                        <td class="text-right" style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.BuyDate)
+                        </td>
+                        <td style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.MaintenanceInterval)
+                        </td>
+                        <td style="vertical-align: middle">
 
-                        @Html.DisplayFor(modelItem => item.UtilizationRate)
-                    </td>
-                    <td style="vertical-align: middle">
-                        @{
-                            if (item.ConstructionSite == null)
-                            {
-                                <span>Keine</span>
-                            }
-                            else
-                            {
-                                @Html.DisplayFor(modelItem => item.ConstructionSite)
-                            }
-                        }
 
-                    </td>
-                    <td class="text-center" style="vertical-align: middle">
-                        <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a> |
-                        <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
-                    </td>
-                </tr>
+                            @{double res = item.UtilizationRate * 100;
+                            }
+                            <span>@res.ToString() %</span>
+
+                        </td>
+                        <td style="vertical-align: middle">
+                            @{
+                                if (item.ConstructionSite == null)
+                                {
+                                    <span>Keine</span>
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.ConstructionSite)
+                                }
+                            }
+
+                        </td>
+                        <td class="text-center" style="vertical-align: middle">
+                            <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a> |
+                            <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

@@ -122,6 +122,7 @@ namespace betriebsmittelverwaltung.Controllers
         {
             if (ModelState.IsValid)
             {
+                resource.Available = true;
                 _context.Add(resource);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
