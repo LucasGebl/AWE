@@ -9,6 +9,7 @@ using AWE_Projekt.Models;
 using betriebsmittelverwaltung.Data;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace betriebsmittelverwaltung.Controllers
 {
@@ -23,14 +24,16 @@ namespace betriebsmittelverwaltung.Controllers
             CheckIn,
             ReturnStatus,
             Creator
-                   
+
         }
 
         private readonly AppDBContext _context;
+        private readonly UserManager<Areas.Identity.Data.User> _userManager;
 
-        public ReturnsController(AppDBContext context)
+        public ReturnsController(AppDBContext context, UserManager<Areas.Identity.Data.User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
@@ -57,7 +60,7 @@ namespace betriebsmittelverwaltung.Controllers
                 case SortCriteria.Creator:
                     query = query.OrderBy(m => m.Creator);
                     break;
-                    
+
                 default:
                     query = query.OrderBy(m => m.Id);
                     break;
@@ -75,7 +78,7 @@ namespace betriebsmittelverwaltung.Controllers
             ViewBag.PageTotal = PageTotal;
             ViewBag.PageSize = PageSize;
 
-            return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).ToListAsync());
+            return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).Include(x => x.Creator).Include(x => x.Resource).ToListAsync());
         }
 
         [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
@@ -87,6 +90,8 @@ namespace betriebsmittelverwaltung.Controllers
             }
 
             var @return = await _context.Returns
+                .Include(x => x.Resource)
+                .Include(x => x.Creator)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@return == null)
             {
@@ -99,6 +104,7 @@ namespace betriebsmittelverwaltung.Controllers
         [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
         public IActionResult Create()
         {
+            ViewData["Resources"] = _context.Resources.Where(x => x.ConstructionSite != null).ToList();
             return View();
         }
 
@@ -108,10 +114,12 @@ namespace betriebsmittelverwaltung.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
-        public async Task<IActionResult> Create([Bind("Id,CheckIn")] Return @return)
+        public async Task<IActionResult> Create([Bind("Id,CheckIn")] Return @return, int resourceId)
         {
             if (ModelState.IsValid)
             {
+                @return.Resource = await _context.Resources.Where(x => x.Id == resourceId).FirstOrDefaultAsync();
+                @return.Creator = await _userManager.GetUserAsync(User);
                 _context.Add(@return);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -67,16 +67,25 @@
                         @Html.DisplayFor(modelItem => item.Id)
                     </td>
                     <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.Resource)
+                        @Html.DisplayFor(modelItem => item.Resource.Name)
                     </td>
                     <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.CheckIn)
+                        @{ 
+                            if(item.ReturnStatus == AWE_Projekt.Models.ReturnStatus.unbestätigt)
+                            {
+                                <span>-</span>
+                            }
+                            else
+                            {
+                                @item.CheckIn;
+                            }
+                        }
                     </td>
                     <td style="vertical-align: middle">
                         @Html.DisplayFor(modelItem => item.ReturnStatus)
                     </td>
                     <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.Creator)
+                        @Html.DisplayFor(modelItem => item.Creator.ForeName) @Html.DisplayFor(modelItem => item.Creator.LastName)
                     </td>
                     <td class="text-center" style="vertical-align: middle">
                         <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
