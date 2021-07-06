@@ -114,7 +114,7 @@ namespace betriebsmittelverwaltung.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Lagerist")]
-        public async Task<IActionResult> Create([Bind("Id,CheckIn")] Return @return)
+        public async Task<IActionResult> Create([Bind("Id,CheckIn")] Return @return, int resourceId)
         {
             if (ModelState.IsValid)
             {
@@ -194,7 +194,7 @@ namespace betriebsmittelverwaltung.Controllers
 
             try
             {
-                @return.ReturnStatus = ReturnStatus.confirmed;
+                @return.ReturnStatus = ReturnStatus.bestätigt;
                 @return.CheckIn = DateTime.Now;
                 if(@return.Resource != null)
                 {
@@ -235,7 +235,7 @@ namespace betriebsmittelverwaltung.Controllers
             {
                 try
                 {
-                    @return.ReturnStatus = ReturnStatus.confirmed;
+                    @return.ReturnStatus = ReturnStatus.bestätigt;
                     @return.CheckIn = DateTime.Now;
                     @return.Resource.ConstructionSite = null;
                     @return.Resource.Available = true;

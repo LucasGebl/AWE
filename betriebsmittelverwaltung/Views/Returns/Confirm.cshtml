@@ -69,7 +69,7 @@
 
                     <td class="text-center" style="vertical-align: middle">
 
-                        @if (item.ReturnStatus == AWE_Projekt.Models.ReturnStatus.uncomfirmed)
+                        @if (item.ReturnStatus == AWE_Projekt.Models.ReturnStatus.unbestätigt)
                         {
                             <a class="btn btn-sm btn-default" asp-action="ConfirmState" asp- asp-route-id="@item.Id">Akzeptieren</a>
                         }
