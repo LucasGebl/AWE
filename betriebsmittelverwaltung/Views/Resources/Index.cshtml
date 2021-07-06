@@ -86,10 +86,21 @@
                         @Html.DisplayFor(modelItem => item.MaintenanceInterval)
                     </td>
                     <td style="vertical-align: middle">
+
                         @Html.DisplayFor(modelItem => item.UtilizationRate)
                     </td>
                     <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.ConstructionSite)
+                        @{
+                            if (item.ConstructionSite == null)
+                            {
+                                <span>Keine</span>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.ConstructionSite)
+                            }
+                        }
+
                     </td>
                     <td class="text-center" style="vertical-align: middle">
                         <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a> |
