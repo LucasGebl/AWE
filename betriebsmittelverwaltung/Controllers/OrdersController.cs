@@ -21,10 +21,12 @@ namespace betriebsmittelverwaltung.Controllers
             [Display(Name = "ID")]
             Id,
             Resource,
-            [Display(Name = "Construction Site")]
+            [Display(Name = "Baustelle")]
             ConstructionSite,
             CheckOut,
+            [Display(Name = "Auftragsstatus")]
             OrderStatus,
+            [Display(Name = "Ersteller")]
             Creator
         }
 

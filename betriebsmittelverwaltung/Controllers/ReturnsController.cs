@@ -20,9 +20,12 @@ namespace betriebsmittelverwaltung.Controllers
         {
             [Display(Name = "ID")]
             Id,
+            [Display(Name = "Ressource")]
             Resource,
             CheckIn,
+            [Display(Name = "Retourenstatus")]
             ReturnStatus,
+            [Display(Name = "Ersteller")]
             Creator
 
         }

@@ -20,9 +20,13 @@
 
 <form id="Form" asp-action="Index" method="get">
     @*<p>
-        <a class="btn btn-primary" asp-action="Create"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;Neuen Auftrag anlegen</a>
+             <a class="btn btn-primary" asp-action="Create"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;Neuen Auftrag anlegen</a>
+        </p>*@
+    <p>
         <input type="button" value="Zurücksetzen" class="btn btn-default pull-right" onclick="resetForm()" />
-    </p>*@
+    </p>
+    <br>
+    <br>
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -65,46 +69,46 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td class="text-right" style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.Resource.Name)
-                    </td>
-                    <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.ConstructionSite.Name)
-                    </td>
-                    <td style="vertical-align: middle">
-                        @{
-                            if (item.OrderStatus == AWE_Projekt.Models.OrderStatus.Aktiv)
-                            {
-                                <span>-</span>
-                            }
-                            else
-                            {
-                                @Html.DisplayFor(modelItem => item.CheckOut)
+                    <tr>
+                        <td class="text-right" style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.Resource.Name)
+                        </td>
+                        <td style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.ConstructionSite.Name)
+                        </td>
+                        <td style="vertical-align: middle">
+                            @{
+                                if (item.OrderStatus == AWE_Projekt.Models.OrderStatus.Aktiv)
+                                {
+                                    <span>-</span>
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.CheckOut)
+                                }
+
                             }
 
-                        }
-
-                    </td>
-                    <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.OrderStatus)
-                    </td>
-                    <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.Creator.ForeName) @Html.DisplayFor(modelItem => item.Creator.LastName)
-                    </td>
-                    <td class="text-center" style="vertical-align: middle">
-                        @if (item.OrderStatus == AWE_Projekt.Models.OrderStatus.Aktiv)
-                        {
-                            <a class="btn btn-sm btn-default" style="background-color:#53a653; color:#fff;" asp-action="Confirm" asp-route-id="@item.Id">Akzeptieren</a>
-                        }
-                        <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a>
-                        <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
-                    </td>
-                </tr>
+                        </td>
+                        <td style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.OrderStatus)
+                        </td>
+                        <td style="vertical-align: middle">
+                            @Html.DisplayFor(modelItem => item.Creator.ForeName) @Html.DisplayFor(modelItem => item.Creator.LastName)
+                        </td>
+                        <td class="text-center" style="vertical-align: middle">
+                            @if (item.OrderStatus == AWE_Projekt.Models.OrderStatus.Aktiv)
+                            {
+                                <a class="btn btn-sm btn-default" style="background-color:#53a653; color:#fff;" asp-action="Confirm" asp-route-id="@item.Id">Akzeptieren</a>
+                            }
+                            <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a>
+                            <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

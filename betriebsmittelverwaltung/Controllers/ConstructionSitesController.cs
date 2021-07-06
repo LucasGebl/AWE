@@ -21,8 +21,11 @@ namespace betriebsmittelverwaltung.Controllers
         {
             [Display(Name = "ID")]
             Id,
+            [Display(Name = "Name")]
             Name,
+            [Display(Name = "Beschreibung")]
             Description,
+            [Display(Name = "Bauleiter")]
             Manager
         }
 

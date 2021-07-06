@@ -54,7 +54,7 @@ namespace AWE_Projekt.Models
         
         [Display(Name = "Bauleiter")]
         public User Manager { get; set; }
-        [Display(Name = "Ressources")]
+        [Display(Name = "Ressourcen")]
         public ICollection<Resource> Resources { get; set; }
         
 
@@ -81,7 +81,7 @@ namespace AWE_Projekt.Models
         public int Id { get; set; }
         [Display(Name = "Check In")]
         public DateTime CheckIn { get; set; }
-        [Display(Name = "Retourstatus")]
+        [Display(Name = "Retourenstatus")]
         public ReturnStatus ReturnStatus { get; set; }
         [Display(Name = "Ressource")]
         public Resource Resource { get; set; }
