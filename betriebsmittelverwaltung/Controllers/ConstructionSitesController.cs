@@ -73,7 +73,7 @@ namespace betriebsmittelverwaltung.Controllers
             ViewBag.PageTotal = PageTotal;
             ViewBag.PageSize = PageSize;
 
-            return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).ToListAsync());
+            return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).Include(m => m.Manager).ToListAsync());
         }
 
         // GET: ConstructionSites/Details/5
@@ -86,6 +86,7 @@ namespace betriebsmittelverwaltung.Controllers
             }
 
             var constructionSite = await _context.ConstructionSites
+                .Include(m => m.Manager)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (constructionSite == null)
             {

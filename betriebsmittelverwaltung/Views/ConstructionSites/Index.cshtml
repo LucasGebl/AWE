@@ -74,11 +74,10 @@
                     <td style="vertical-align: middle">
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
-                    @{
-                        var user = await UserManager.GetUserAsync(User);
-                    }
+
                 <td style="vertical-align: middle">
-                    @Html.DisplayFor(modelItem => item.Manager.ForeName) @Html.DisplayFor(modelItem => item.Manager.LastName)
+                   
+                  @Html.DisplayFor(modelItem => item.Manager.ForeName) @Html.DisplayFor(modelItem => item.Manager.LastName)
                 </td>
                     
                     <td class="text-center" style="vertical-align: middle">
