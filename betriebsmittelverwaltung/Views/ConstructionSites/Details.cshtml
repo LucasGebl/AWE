@@ -6,6 +6,11 @@
     ViewData["Title"] = "Details";
 }
 @inject UserManager<User> UserManager;
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var hasPermission = !(await UserManager.IsInRoleAsync(user, "Lagerist"));
+}
 <h3>Baustellenverwaltung</h3>
 <h4>@ViewData["Title"]</h4>
 
@@ -24,9 +29,6 @@
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
-        @{
-            var user = await UserManager.GetUserAsync(User);
-        }
 
         <dt>
             @Html.DisplayNameFor(model => model.Manager)
@@ -43,7 +45,11 @@
     var res = (List<AWE_Projekt.Models.Resource>)ViewData["Resources"];
 }
 
-<a class="btn btn-sm btn-default" asp-controller="Orders" asp-action="Create" asp-route-constructionSiteId="@Model.Id">Neuen Antrag für Betriebsmittel erstellen</a>
+@if (hasPermission)
+{
+    <a class="btn btn-sm btn-default" asp-controller="Orders" asp-action="Create" asp-route-constructionSiteId="@Model.Id">Neuen Antrag für Betriebsmittel erstellen</a>
+
+}
 @if (res.Count != 0)
 {
     <table class="table table-bordered">
@@ -63,26 +69,34 @@
                 <tr>
                     <td>@item.Name</td>
                     <td>
-                        @{ bool found = false;
-                            foreach (int i in (List<int>)ViewData["alreadyReturnedList"])
-                            {
+                        @{
 
-                                if (i == item.Id)
-                                {
-                                    found = true;
-                                    break;
-                                }
-                            }
-
-                            @if (found)
+                            if (!hasPermission)
                             {
-                                <span>Resource wurde zur Retoure freigegeben.</span>
+                                <span>Es sind keine Optionen verfügbar</span>
                             }
                             else
                             {
-                                <a class="btn btn-sm btn-default" asp-controller="Returns" asp-action="Create" asp-route-constructionSiteId="@Model.Id" asp-route-id="@item.Id">Retour</a>
+                                bool found = false;
+                                foreach (int i in (List<int>)ViewData["alreadyReturnedList"])
+                                {
 
-                            }}
+                                    if (i == item.Id)
+                                    {
+                                        found = true;
+                                        break;
+                                    }
+                                }
+
+                                @if (found)
+                                {
+                                    <span>Resource wurde zur Retoure freigegeben.</span>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-sm btn-default" asp-controller="Returns" asp-action="Create" asp-route-constructionSiteId="@Model.Id" asp-route-id="@item.Id">Retour</a>
+
+                                }}}
                     </td>
 
                 </tr>

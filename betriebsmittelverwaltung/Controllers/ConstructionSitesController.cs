@@ -80,7 +80,7 @@ namespace betriebsmittelverwaltung.Controllers
         }
 
         // GET: ConstructionSites/Details/5
-        [Authorize(Roles = "Admin,Bauleiter")]
+        [Authorize(Roles = "Admin,Lagerist,Bauleiter")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
