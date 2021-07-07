@@ -43,7 +43,7 @@ namespace betriebsmittelverwaltung.Controllers
         {
             IQueryable<ConstructionSite> query = _context.ConstructionSites;
             query = (Search != null) ? query.Where(m => (m.Name.Contains(Search))) : query;
-           // query = (Filter != null) ? query.Where(m => (m.Manufacturer == Filter)) : query;
+            // query = (Filter != null) ? query.Where(m => (m.Manufacturer == Filter)) : query;
 
             switch (Sort)
             {
@@ -69,8 +69,8 @@ namespace betriebsmittelverwaltung.Controllers
             Page = (Page < 1) ? 1 : Page;
 
             ViewBag.Search = Search;
-         //   ViewBag.Filter = Filter;
-         //   ViewBag.FilterValues = new SelectList(await _context.ConstructionSites.Select(m => m.Manufacturer).Distinct().ToListAsync());
+            //   ViewBag.Filter = Filter;
+            //   ViewBag.FilterValues = new SelectList(await _context.ConstructionSites.Select(m => m.Manufacturer).Distinct().ToListAsync());
             ViewBag.Sort = Sort;
             ViewBag.Page = Page;
             ViewBag.PageTotal = PageTotal;
@@ -94,15 +94,14 @@ namespace betriebsmittelverwaltung.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             ViewData["Resources"] = await _context.Resources.Where(x => x.ConstructionSite == constructionSite).ToListAsync();
-           var returns = await _context.Returns.Where(x => x.Resource.Id == x.Resource.Id && x.ReturnStatus == ReturnStatus.unbestätigt).ToListAsync();
-            if (returns.Count > 0)
+            var returns = await _context.Returns.Where(x => x.Resource.ConstructionSite.Id == constructionSite.Id && x.ReturnStatus == ReturnStatus.unbestätigt).ToListAsync();
+            List<int> returnList = new List<int>();
+            foreach(var r in returns)
             {
-                ViewData["alreadyReturned"] = true;
+                returnList.Add(r.Resource.Id);
             }
-            else
-            {
-                ViewData["alreadyReturned"] = false;
-            }
+            ViewData["alreadyReturnedList"] = returnList;
+
             if (constructionSite == null)
             {
                 return NotFound();
@@ -129,7 +128,7 @@ namespace betriebsmittelverwaltung.Controllers
             var user = await _userManager.GetUserAsync(User);
             constructionSite.Manager = user;
             constructionSite.Resources = new List<Resource>();
-            
+
 
             if (ModelState.IsValid)
             {
@@ -221,7 +220,7 @@ namespace betriebsmittelverwaltung.Controllers
         {
             var constructionSite = await _context.ConstructionSites.FindAsync(id);
 
-            var orders = await _context.Orders.Where(x => x.OrderStatus == OrderStatus.Aktiv && x.ConstructionSite == constructionSite).ToListAsync();
+            var orders = await _context.Orders.Where(x => x.ConstructionSite == constructionSite).ToListAsync();
             foreach (var item in orders)
             {
                 item.ConstructionSite = null;
@@ -230,7 +229,7 @@ namespace betriebsmittelverwaltung.Controllers
                 _context.Orders.Update(item);
             }
 
-            var returns = await _context.Returns.Where(x => x.ReturnStatus == ReturnStatus.unbestätigt && x.Resource.ConstructionSite == constructionSite).ToListAsync();
+            var returns = await _context.Returns.Where(x => x.Resource.ConstructionSite == constructionSite).ToListAsync();
             foreach (var item in returns)
             {
                 item.ReturnStatus = ReturnStatus.bestätigt;
@@ -239,7 +238,7 @@ namespace betriebsmittelverwaltung.Controllers
             }
 
             var resources = await _context.Resources.Where(x => x.ConstructionSite == constructionSite).ToListAsync();
-            foreach(var item in resources)
+            foreach (var item in resources)
             {
                 item.ConstructionSite = null;
                 item.Available = true;

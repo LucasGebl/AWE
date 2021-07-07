@@ -63,15 +63,26 @@
                 <tr>
                     <td>@item.Name</td>
                     <td>
-                        @if ((bool)ViewData["alreadyReturned"])
-                        {
-                            <span>Resource wurde zur Retoure freigegeben.</span>
-                        }
-                        else
-                        {
-                            <a class="btn btn-sm btn-default" asp-controller="Returns" asp-action="Create" asp-route-constructionSiteId="@Model.Id" asp-route-id="@item.Id">Retour</a>
+                        @{ bool found = false;
+                            foreach (int i in (List<int>)ViewData["alreadyReturnedList"])
+                            {
 
-                        }
+                                if (i == item.Id)
+                                {
+                                    found = true;
+                                    break;
+                                }
+                            }
+
+                            @if (found)
+                            {
+                                <span>Resource wurde zur Retoure freigegeben.</span>
+                            }
+                            else
+                            {
+                                <a class="btn btn-sm btn-default" asp-controller="Returns" asp-action="Create" asp-route-constructionSiteId="@Model.Id" asp-route-id="@item.Id">Retour</a>
+
+                            }}
                     </td>
 
                 </tr>

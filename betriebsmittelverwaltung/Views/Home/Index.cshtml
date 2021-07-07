@@ -5,9 +5,7 @@
 @{ var user = await UserManager.GetUserAsync(User);}
 @{ var roles = await UserManager.GetRolesAsync(user);}
 @{ ViewData["Title"] = "Startseite"; }
-<environment names="Development">
-    <link rel="stylesheet" href="~/css/custom.css" />
-</environment>
+
 <h2>Willkommen, @user.ForeName @user.LastName (@roles[0])</h2>
 <h4>Was möchtest du tun?</h4>
 <hr />
