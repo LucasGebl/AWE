@@ -94,6 +94,15 @@ namespace betriebsmittelverwaltung.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             ViewData["Resources"] = await _context.Resources.Where(x => x.ConstructionSite == constructionSite).ToListAsync();
+           var returns = await _context.Returns.Where(x => x.Resource.Id == x.Resource.Id && x.ReturnStatus == ReturnStatus.unbestätigt).ToListAsync();
+            if (returns.Count > 0)
+            {
+                ViewData["alreadyReturned"] = true;
+            }
+            else
+            {
+                ViewData["alreadyReturned"] = false;
+            }
             if (constructionSite == null)
             {
                 return NotFound();

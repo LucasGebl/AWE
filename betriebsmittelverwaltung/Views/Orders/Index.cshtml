@@ -1,4 +1,8 @@
-﻿@model IEnumerable<AWE_Projekt.Models.Order>
+﻿@using Microsoft.AspNetCore.Identity
+@using betriebsmittelverwaltung.Areas.Identity.Data
+@inject UserManager<User> UserManager
+@{ var user = await UserManager.GetUserAsync(User);}
+@model IEnumerable<AWE_Projekt.Models.Order>
 
 @{
     ViewData["Title"] = "Auftragsverwaltung";
@@ -101,13 +105,20 @@
                             @Html.DisplayFor(modelItem => item.Creator.ForeName) @Html.DisplayFor(modelItem => item.Creator.LastName)
                         </td>
                         <td class="text-center" style="vertical-align: middle">
-                            @if (item.OrderStatus == AWE_Projekt.Models.OrderStatus.Aktiv)
+                            @if (item.OrderStatus == AWE_Projekt.Models.OrderStatus.Aktiv && (User.IsInRole("Admin") || User.IsInRole("Lagerist")))
                             {
                                 <a class="btn btn-sm btn-default" style="background-color:#53a653; color:#fff;" asp-action="Confirm" asp-route-id="@item.Id">Akzeptieren</a>
                             }
-                            <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a>
+                            @if (item.OrderStatus == AWE_Projekt.Models.OrderStatus.Aktiv)
+                            {
+                                <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a>
+                            }
                             <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
+                            @if (!User.IsInRole("Bauleiter") || (User.IsInRole("Bauleiter") && item.OrderStatus == AWE_Projekt.Models.OrderStatus.Aktiv && item.Creator.Id == user.Id))
+                            {
+                                <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
+                            }
+
                         </td>
                     </tr>
                 }

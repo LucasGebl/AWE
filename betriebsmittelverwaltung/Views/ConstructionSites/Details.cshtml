@@ -62,7 +62,17 @@
             {
                 <tr>
                     <td>@item.Name</td>
-                    <td><a class="btn btn-sm btn-default" asp-controller="Returns" asp-action="Create" asp-route-constructionSite="@Model" asp-route-id="@item.Id">Retour</a></td>
+                    <td>
+                        @if ((bool)ViewData["alreadyReturned"])
+                        {
+                            <span>Resource wurde zur Retoure freigegeben.</span>
+                        }
+                        else
+                        {
+                            <a class="btn btn-sm btn-default" asp-controller="Returns" asp-action="Create" asp-route-constructionSiteId="@Model.Id" asp-route-id="@item.Id">Retour</a>
+
+                        }
+                    </td>
 
                 </tr>
             }

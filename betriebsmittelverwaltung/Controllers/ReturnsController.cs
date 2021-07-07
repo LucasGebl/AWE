@@ -84,7 +84,7 @@ namespace betriebsmittelverwaltung.Controllers
             return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).Include(x => x.Creator).Include(x => x.Resource).ToListAsync());
         }
 
-        [Authorize(Roles = "Admin,Lagerist")]
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -104,8 +104,8 @@ namespace betriebsmittelverwaltung.Controllers
             return View(@return);
         }
 
-        [Authorize(Roles = "Admin,Lagerist")]
-        public async Task<IActionResult> Create(int? id)
+        [Authorize(Roles = "Admin,Bauleiter")]
+        public async Task<IActionResult> Create(int? id, int? constructionSiteId)
         {
             if (id == null)
             {
@@ -119,7 +119,7 @@ namespace betriebsmittelverwaltung.Controllers
                 @return.Creator = await _userManager.GetUserAsync(User);
                 _context.Add(@return);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "ConstructionSites", new { id = constructionSiteId });
             }
             return View(@return);
 
@@ -127,26 +127,26 @@ namespace betriebsmittelverwaltung.Controllers
             //return View();
         }
 
-        // POST: Returns/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Lagerist")]
-        public async Task<IActionResult> Create([Bind("Id,CheckIn")] Return @return, int resourceId)
-        {
-            if (ModelState.IsValid)
-            {
-                @return.Resource = await _context.Resources.Where(x => x.Id == resourceId).FirstOrDefaultAsync();
-                @return.Creator = await _userManager.GetUserAsync(User);
-                _context.Add(@return);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(@return);
-        }
+        //// POST: Returns/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Admin,Bauleiter")]
+        //public async Task<IActionResult> Create([Bind("Id,CheckIn")] Return @return, int resourceId)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        @return.Resource = await _context.Resources.Where(x => x.Id == resourceId).FirstOrDefaultAsync();
+        //        @return.Creator = await _userManager.GetUserAsync(User);
+        //        _context.Add(@return);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(@return);
+        //}
 
-        [Authorize(Roles = "Admin,Lagerist")]
+        [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -198,6 +198,7 @@ namespace betriebsmittelverwaltung.Controllers
             return View(@return);
         }
 
+        [Authorize]
         public async Task<IActionResult> Confirm(int? id, ConstructionSite constructionSite)
         {
             if (id == null || constructionSite == null)
@@ -205,7 +206,7 @@ namespace betriebsmittelverwaltung.Controllers
                 return NotFound();
             }
 
-            var @return = await _context.Returns.Where(x => x.Id == id).Include(x => x.Creator).Include(x => x.Resource).FirstOrDefaultAsync();
+            var @return = await _context.Returns.Where(x => x.Id == id).Include(x => x.Creator).Include(x => x.Resource).Include(x => x.Resource.ConstructionSite).FirstOrDefaultAsync();
             if (@return == null)
             {
                 return NotFound();
@@ -217,13 +218,8 @@ namespace betriebsmittelverwaltung.Controllers
                 @return.CheckIn = DateTime.Now;
                 if (@return.Resource != null)
                 {
-                    var result = _context.Resources.SingleOrDefault(b => b.Id == @return.Resource.Id);
-                    if (result != null)
-                    {
-                        result.ConstructionSite = null;
-                        result.Available = true;
-                        _context.SaveChanges();
-                    }
+                    @return.Resource.ConstructionSite = null;
+                    @return.Resource.Available = true;
 
                 }
 
