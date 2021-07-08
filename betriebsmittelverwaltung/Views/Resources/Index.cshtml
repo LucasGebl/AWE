@@ -88,9 +88,20 @@
                         <td style="vertical-align: middle">
 
 
-                            @{double res = item.UtilizationRate * 100;
+                            @{
+
+                                if (ViewData["ResourceHistory_" + item.Id] == null)
+                                {
+                                    <span>0%</span>
+                                }
+                                else
+                                {
+                                    double res = Math.Round((double)ViewData["ResourceHistory_" + item.Id] * 100);
+                                    <span>@res.ToString()%</span>
+                                }
+
                             }
-                            <span>@res.ToString() %</span>
+
 
                         </td>
                         <td style="vertical-align: middle">

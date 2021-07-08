@@ -92,7 +92,7 @@ namespace betriebsmittelverwaltung
             User user = await userManager.FindByNameAsync("admin@test.de");
             if (user == null)
             {
-                user = new User() { Email = "admin@test.de", UserName = "admin@test.de"};
+                user = new User() { Email = "admin@test.de", UserName = "admin@test.de", ForeName="Admin", LastName="User"};
                 await userManager.CreateAsync(user, "d9asdh93D89hd0_2h");
                 System.Diagnostics.Debug.WriteLine(String.Format("User {0} was created", user.Email));
             }

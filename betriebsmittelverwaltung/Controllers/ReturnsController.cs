@@ -223,6 +223,23 @@ namespace betriebsmittelverwaltung.Controllers
 
                 }
 
+                var lastOrder = await _context.Orders.Where(x => x.Resource.Id == @return.Resource.Id).Select(x => x.CheckOut).LastOrDefaultAsync();
+
+                TimeSpan ts = @return.CheckIn - lastOrder;
+                var res = await _context.RessourceHistories.Where(x => x.Resource == @return.Resource).FirstOrDefaultAsync();
+                if(res == null)
+                {
+                    ResourceHistory resHis = new ResourceHistory { Resource = @return.Resource, TimeStamp = ts };
+                    _context.Add(resHis);
+                }
+                else
+                {
+                    res.TimeStamp += ts;
+                    _context.Update(res);
+                }
+             
+
+               
                 _context.Update<Resource>(@return.Resource);
                 _context.Update(@return);
                 await _context.SaveChangesAsync();

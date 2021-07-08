@@ -117,7 +117,7 @@ namespace AWE_Projekt.Models
     {
         public int Id { get; set; }
         [Display(Name = "Zeitstempel")]
-        public DateTime TimeStamp { get; set; }
+        public TimeSpan TimeStamp { get; set; }
         [Display(Name = "Historientyp")]
         public HistoryType HiType { get; set; }
         [Display(Name = "Ressource")]

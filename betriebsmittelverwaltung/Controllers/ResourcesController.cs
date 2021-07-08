@@ -87,7 +87,20 @@ namespace betriebsmittelverwaltung.Controllers
             ViewBag.PageTotal = PageTotal;
             ViewBag.PageSize = PageSize;
 
+            var resHis = await _context.RessourceHistories.Include(x => x.Resource).ToListAsync();
+            foreach (var id in resHis)
+            {
+                var resultTime = Divide(id.TimeStamp,DateTime.Now- id.Resource.BuyDate);
+                ViewData["ResourceHistory_" + id.Id] = resultTime;
+            }
+            
+
             return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).Include(x => x.ConstructionSite).ToListAsync());
+        }
+
+        public static double Divide(TimeSpan dividend, TimeSpan divisor)
+        {
+            return (double)dividend.Ticks / (double)divisor.Ticks;
         }
 
         [Authorize(Roles = "Admin,Lagerist")]
