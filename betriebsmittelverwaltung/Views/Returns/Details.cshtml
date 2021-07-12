@@ -19,9 +19,21 @@
         <dt>
             @Html.DisplayNameFor(model => model.CheckIn)
         </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CheckIn)
-        </dd>
+        @{
+            if (Model.ReturnStatus == AWE_Projekt.Models.ReturnStatus.bestätigt)
+            {
+                <dd>
+                    @Html.DisplayFor(model => model.CheckIn)
+                </dd>
+            }
+            else
+            {
+                <dd>
+                    -
+                </dd>
+            }
+        }
+
         <dt>
             @Html.DisplayNameFor(model => model.ReturnStatus)
         </dt>

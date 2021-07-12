@@ -10,7 +10,6 @@
 <hr />
 <h3>Sind Sie sicher, dass Sie dies löschen möchten?</h3>
 <div>
-    <h4></h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -22,9 +21,20 @@
         <dt>
             @Html.DisplayNameFor(model => model.CheckOut)
         </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CheckOut)
-        </dd>
+        @{
+            if (Model.OrderStatus == AWE_Projekt.Models.OrderStatus.Erledigt)
+            {
+                <dd>
+                    @Html.DisplayFor(model => model.CheckOut)
+                </dd>
+            }
+            else
+            {
+                <dd>
+                    -
+                </dd>
+            }
+        }
     </dl>
 
     <form asp-action="Delete">

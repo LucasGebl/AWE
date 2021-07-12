@@ -45,7 +45,7 @@
     var res = (List<AWE_Projekt.Models.Resource>)ViewData["Resources"];
 }
 
-@if (hasPermission) 
+@if (hasPermission)
 {
     <a class="btn btn-sm btn-default" asp-controller="Orders" asp-action="Create" asp-route-constructionSiteId="@Model.Id">Neuen Antrag für Betriebsmittel erstellen</a>
 
@@ -110,6 +110,15 @@ else
 }
 
 
-<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Anpassen</a> |
-<a asp-action="Index" class="btn btn-default">Zurück zur Liste</a>
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Anpassen</a>
+@{ if (User.IsInRole("Lagerist"))
+    {
+        <a asp-controller="Orders" asp-action="Index" class="btn btn-default">Zurück zur Liste</a>
+    }
+    else
+    {
+        <a asp-action="Index" class="btn btn-default">Zurück zur Liste</a>
+    }
+}
+
 </div>

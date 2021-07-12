@@ -169,7 +169,7 @@ namespace betriebsmittelverwaltung.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Lagerist")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BuyDate,Type,UtilizationRate,MaintenanceInterval")] Resource resource)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BuyDate,Type,UtilizationRate,MaintenanceInterval,Available")] Resource resource)
         {
             if (id != resource.Id)
             {
@@ -233,8 +233,6 @@ namespace betriebsmittelverwaltung.Controllers
         {
             var resource = await _context.Resources.Where(x => x.Id == id).Include(x => x.ConstructionSite).FirstOrDefaultAsync();
 
-
-
             var orders = await _context.Orders.Where(x => x.Resource == resource).ToListAsync();
             foreach (var item in orders)
             {
@@ -253,7 +251,6 @@ namespace betriebsmittelverwaltung.Controllers
             {
                 _context.Remove(item);
             }
-
 
 
             await _context.SaveChangesAsync();

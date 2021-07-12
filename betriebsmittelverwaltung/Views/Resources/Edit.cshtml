@@ -33,6 +33,7 @@
                 <select asp-for="MaintenanceInterval" asp-items="@Html.GetEnumSelectList<AWE_Projekt.Models.MaintenanceInterval>()" class="form-control"></select>
                     <span asp-validation-for="MaintenanceInterval" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Sichern" class="btn btn-primary" /> |
                 <a asp-action="Index" class="btn btn-default">Zurück zur Liste</a>

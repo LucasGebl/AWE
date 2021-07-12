@@ -18,9 +18,21 @@
         <dt>
             @Html.DisplayNameFor(model => model.CheckOut)
         </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CheckOut)
-        </dd>
+        @{
+            if (Model.OrderStatus == AWE_Projekt.Models.OrderStatus.Erledigt)
+            {
+                <dd>
+                    @Html.DisplayFor(model => model.CheckOut)
+                </dd>
+            }
+            else
+            {
+                <dd>
+                    -
+                </dd>
+            }
+        }
+
         <dt>
             @Html.DisplayNameFor(model => model.OrderStatus)
         </dt>
