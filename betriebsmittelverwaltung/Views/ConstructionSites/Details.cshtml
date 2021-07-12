@@ -45,7 +45,7 @@
     var res = (List<AWE_Projekt.Models.Resource>)ViewData["Resources"];
 }
 
-@if (hasPermission)
+@if (hasPermission) 
 {
     <a class="btn btn-sm btn-default" asp-controller="Orders" asp-action="Create" asp-route-constructionSiteId="@Model.Id">Neuen Antrag für Betriebsmittel erstellen</a>
 
@@ -63,7 +63,7 @@
         </thead>
         <tbody>
 
-
+            <!-- Iteration durch Resourcen, welche der Baustelle zugewiesen sind-->
             @foreach (var item in res)
             {
                 <tr>
@@ -94,7 +94,7 @@
                                 }
                                 else
                                 {
-                                    <a class="btn btn-sm btn-default" asp-controller="Returns" asp-action="Create" asp-route-constructionSiteId="@Model.Id" asp-route-id="@item.Id">Retour</a>
+                                    <a class="btn btn-sm btn-default" asp-controller="Returns" asp-action="Create" asp-route-constructionSiteId="@Model.Id" asp-route-id="@item.Id">Retoure anfordern!</a>
 
                                 }}}
                     </td>

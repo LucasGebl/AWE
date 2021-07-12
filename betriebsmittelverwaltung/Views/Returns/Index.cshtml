@@ -64,6 +64,7 @@
                 </tr>
             </thead>
             <tbody>
+                <!--Iteration für Anzeige der Retouren -->
                 @foreach (var item in Model)
                 {
                     <tr>
@@ -92,11 +93,12 @@
                             @Html.DisplayFor(modelItem => item.Creator.ForeName) @Html.DisplayFor(modelItem => item.Creator.LastName)
                         </td>
                         <td class="text-center" style="vertical-align: middle">
+                            <!-- Zeige Akzeptieren Button, wenn unbestätigt -->
                             @if (item.ReturnStatus == AWE_Projekt.Models.ReturnStatus.unbestätigt)
                             {
                                 <a class="btn btn-sm btn-default" style="background-color:#53a653; color:#fff;" asp-action="Confirm" asp-route-id="@item.Id">Akzeptieren</a>
                             }
-                            <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a>
+
                             <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a>
                             <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
                         </td>

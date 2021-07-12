@@ -24,6 +24,7 @@
                     <label>Wähle eine Resource aus</label>
                     <select name="resourceId">
                         @{
+                            // Iteration durch freie Ressourcen
                             foreach (var item in (List<AWE_Projekt.Models.Resource>)ViewData["Resources"])
                             {
                                 <option value="@item.Id">@item.Name</option>

@@ -32,12 +32,11 @@
             @Html.DisplayNameFor(model => model.Creator)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Creator)
+            @Html.DisplayFor(model => model.Creator.ForeName)  @Html.DisplayFor(model => model.Creator.LastName)
         </dd>
 
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Anpassen</a> |
     <a asp-action="Index" class="btn btn-default">Zurück zur Liste</a>
 </div>

@@ -112,15 +112,19 @@
                                 }
                                 else
                                 {
-                        <a asp-action="Details" asp-controller="ConstructionSites" asp-route-id="@item.ConstructionSite.Id">@item.ConstructionSite.Name</a>
+                                    <a asp-action="Details" asp-controller="ConstructionSites" asp-route-id="@item.ConstructionSite.Id">@item.ConstructionSite.Name</a>
                                 }
                             }
 
                         </td>
                         <td class="text-center" style="vertical-align: middle">
                             <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Anpassen</a>
-                            <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a> 
-                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
+                            <a class="btn btn-sm btn-default" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            @if (item.ConstructionSite == null)
+                            {
+                                <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
+                            }
+
                         </td>
                     </tr>
                 }

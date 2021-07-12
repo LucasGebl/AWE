@@ -90,17 +90,17 @@ namespace betriebsmittelverwaltung.Controllers
             var resHis = await _context.RessourceHistories.Include(x => x.Resource).ToListAsync();
             foreach (var id in resHis)
             {
-                var resultTime = Divide(id.TimeStamp,DateTime.Now- id.Resource.BuyDate);
+                var resultTime = Divide(id.Span, (ulong)((DateTime.Now - id.Resource.BuyDate).TotalSeconds));
                 ViewData["ResourceHistory_" + id.Id] = resultTime;
             }
-            
+
 
             return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).Include(x => x.ConstructionSite).ToListAsync());
         }
 
-        public static double Divide(TimeSpan dividend, TimeSpan divisor)
+        public static double Divide(UInt64 dividend, UInt64 divisor)
         {
-            return (double)dividend.Ticks / (double)divisor.Ticks;
+            return (double)dividend / (double)divisor;
         }
 
         [Authorize(Roles = "Admin,Lagerist")]
@@ -209,7 +209,14 @@ namespace betriebsmittelverwaltung.Controllers
             }
 
             var resource = await _context.Resources
+                .Include(x => x.ConstructionSite)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (resource.ConstructionSite != null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
             if (resource == null)
             {
                 return NotFound();
@@ -224,7 +231,34 @@ namespace betriebsmittelverwaltung.Controllers
         [Authorize(Roles = "Admin,Lagerist")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var resource = await _context.Resources.FindAsync(id);
+            var resource = await _context.Resources.Where(x => x.Id == id).Include(x => x.ConstructionSite).FirstOrDefaultAsync();
+
+
+
+            var orders = await _context.Orders.Where(x => x.Resource == resource).ToListAsync();
+            foreach (var item in orders)
+            {
+                _context.Remove(item);
+            }
+
+            var returns = await _context.Returns.Where(x => x.Resource == resource).ToListAsync();
+            foreach (var item in returns)
+            {
+                _context.Remove(item);
+            }
+
+
+            var resHistory = await _context.RessourceHistories.Where(x => x.Resource == resource).ToListAsync();
+            foreach (var item in resHistory)
+            {
+                _context.Remove(item);
+            }
+
+
+
+            await _context.SaveChangesAsync();
+
+
             _context.Resources.Remove(resource);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

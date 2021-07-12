@@ -123,28 +123,8 @@ namespace betriebsmittelverwaltung.Controllers
             }
             return View(@return);
 
-            //ViewData["Resources"] = _context.Resources.Where(x => x.ConstructionSite != null).ToList();
-            //return View();
         }
 
-        //// POST: Returns/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Admin,Bauleiter")]
-        //public async Task<IActionResult> Create([Bind("Id,CheckIn")] Return @return, int resourceId)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        @return.Resource = await _context.Resources.Where(x => x.Id == resourceId).FirstOrDefaultAsync();
-        //        @return.Creator = await _userManager.GetUserAsync(User);
-        //        _context.Add(@return);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(@return);
-        //}
 
         [Authorize(Roles = "Admin,Bauleiter,Lagerist")]
         public async Task<IActionResult> Edit(int? id)
@@ -214,6 +194,7 @@ namespace betriebsmittelverwaltung.Controllers
 
             try
             {
+                //Retourverzeichnung
                 @return.ReturnStatus = ReturnStatus.bestätigt;
                 @return.CheckIn = DateTime.Now;
                 if (@return.Resource != null)
@@ -223,18 +204,19 @@ namespace betriebsmittelverwaltung.Controllers
 
                 }
 
+                //Nutzungsraten Berechnung
                 var lastOrder = await _context.Orders.Where(x => x.Resource.Id == @return.Resource.Id).Select(x => x.CheckOut).LastOrDefaultAsync();
 
-                TimeSpan ts = @return.CheckIn - lastOrder;
+                TimeSpan currentUtilitySpan = @return.CheckIn - lastOrder;
                 var res = await _context.RessourceHistories.Where(x => x.Resource == @return.Resource).FirstOrDefaultAsync();
                 if(res == null)
                 {
-                    ResourceHistory resHis = new ResourceHistory { Resource = @return.Resource, TimeStamp = ts };
+                    ResourceHistory resHis = new ResourceHistory { Resource = @return.Resource, Span = (ulong)currentUtilitySpan.TotalSeconds };
                     _context.Add(resHis);
                 }
                 else
                 {
-                    res.TimeStamp += ts;
+                    res.Span += (ulong)currentUtilitySpan.TotalSeconds;
                     _context.Update(res);
                 }
              
