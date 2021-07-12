@@ -36,9 +36,42 @@ namespace betriebsmittelverwaltung.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string Search, string Filter, SortCriteria Sort = SortCriteria.ForeName, int Page = 1, int PageSize = 10)
         {
-            return View(await _context.Users.ToListAsync());
+            IQueryable<User> query = _context.Users;
+            query = (Search != null) ? query.Where(m => (m.ForeName.Contains(Search))) : query;
+            // query = (Filter != null) ? query.Where(m => (m.Manufacturer == Filter)) : query;
+
+            switch (Sort)
+            {
+                case SortCriteria.ForeName:
+                    query = query.OrderBy(m => m.ForeName);
+                    break;
+                case SortCriteria.LastName:
+                    query = query.OrderBy(m => m.LastName);
+                    break;
+                case SortCriteria.Email:
+                    query = query.OrderBy(m => m.Email);
+                    break;
+                default:
+                    query = query.OrderBy(m => m.ForeName);
+                    break;
+            }
+
+            int PageTotal = ((await query.CountAsync()) + PageSize - 1) / PageSize;
+            Page = (Page > PageTotal) ? PageTotal : Page;
+            Page = (Page < 1) ? 1 : Page;
+
+            ViewBag.Search = Search;
+            //   ViewBag.Filter = Filter;
+            //   ViewBag.FilterValues = new SelectList(await _context.ConstructionSites.Select(m => m.Manufacturer).Distinct().ToListAsync());
+            ViewBag.Sort = Sort;
+            ViewBag.Page = Page;
+            ViewBag.PageTotal = PageTotal;
+            ViewBag.PageSize = PageSize;
+
+            return View(await query.Skip(PageSize * (Page - 1)).Take(PageSize).ToListAsync());
+
         }
 
         [Authorize(Roles = "Admin")]
